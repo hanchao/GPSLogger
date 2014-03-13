@@ -458,11 +458,6 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0420;
-				TargetAttributes = {
-					132C464014D26F8C0040EAC7 = {
-						DevelopmentTeam = CRYDBENHJU;
-					};
-				};
 			};
 			buildConfigurationList = 132C463B14D26F8C0040EAC7 /* Build configuration list for PBXProject "GPSLogger" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -617,7 +612,7 @@
 		132C466014D26F8D0040EAC7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: han chao (JY3YXSE4LX)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -634,7 +629,7 @@
 		132C466114D26F8D0040EAC7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: han chao (JY3YXSE4LX)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",

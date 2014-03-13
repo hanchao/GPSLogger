@@ -1,3 +1,4 @@
 language: objective-c
 xcode_project: GPSLogger.xcodeproj
 xcode_scheme: GPSLogger
+xcode_sdk: iphonesimulator
