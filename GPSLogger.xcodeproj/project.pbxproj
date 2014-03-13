@@ -458,6 +458,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0420;
+				TargetAttributes = {
+					132C464014D26F8C0040EAC7 = {
+						DevelopmentTeam = CRYDBENHJU;
+					};
+				};
 			};
 			buildConfigurationList = 132C463B14D26F8C0040EAC7 /* Build configuration list for PBXProject "GPSLogger" */;
 			compatibilityVersion = "Xcode 3.2";
