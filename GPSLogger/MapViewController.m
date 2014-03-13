@@ -8,14 +8,14 @@
 
 #import <CoreLocation/CoreLocation.h>
 #import <MessageUI/MFMailComposeViewController.h>
-#import <GPX/GPX.h>
+#import "GPX.h"
 #import "MapViewController.h"
 #import "TrackPoint.h"
 // Inngerband
 #import "CoreDataStore.h"
 #import "Functions.h"
 #import "NSManagedObject+InnerBand.h"
-
+#import "Coord.h"
 
 @interface MapViewController ()
 @property (strong, nonatomic) UIDocumentInteractionController *interactionController;
@@ -145,6 +145,9 @@
     MKMapRect zoomRect = MKMapRectNull;
     for (TrackPoint *trackPoint in self.track.trackpoints) {
         CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(trackPoint.latitude.floatValue, trackPoint.longitude.floatValue);
+        
+        GpsCoorEncrypt(&coordinate.longitude, &coordinate.latitude);
+        
         MKMapPoint annotationPoint = MKMapPointForCoordinate(coordinate);
         MKMapRect pointRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 0, 0);
         if (MKMapRectIsNull(zoomRect)) {
@@ -176,9 +179,12 @@
 
         // update annotation and overlay
         [self updateOverlay];
+        
+        CLLocationCoordinate2D coordinate = newLocation.coordinate;
+        GpsCoorEncrypt(&coordinate.longitude, &coordinate.latitude);
 
         // set new location as center
-        [self.mapView setCenterCoordinate:newLocation.coordinate animated:YES];
+        [self.mapView setCenterCoordinate:coordinate animated:YES];
     }
 }
 
@@ -213,11 +219,13 @@
     int i = 0;
     for (TrackPoint *trackPoint in trackPoints) {
         coors[i] = trackPoint.coordinate;
+        
+        GpsCoorEncrypt(&coors[i].longitude, &coors[i].latitude);
         i++;
     }
     
     MKPolyline *line = [MKPolyline polylineWithCoordinates:coors count:trackPoints.count];
-    
+
     // replace overlay
     [self.mapView removeOverlays:self.mapView.overlays];
     [self.mapView addOverlay:line];
