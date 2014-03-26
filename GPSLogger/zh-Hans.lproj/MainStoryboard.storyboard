@@ -53,7 +53,7 @@
             </objects>
             <point key="canvasLocation" x="598" y="67"/>
         </scene>
-        <!--Map View Controller - Map-->
+        <!--Map View Controller - 地图-->
         <scene sceneID="703-Az-xUB">
             <objects>
                 <viewController id="NNT-Nd-TQh" customClass="MapViewController" sceneMemberID="viewController">
@@ -71,8 +71,8 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Map" id="gGC-DW-lRw">
-                        <barButtonItem key="leftBarButtonItem" title="Close" style="done" id="gst-Wf-G78">
+                    <navigationItem key="navigationItem" title="地图" id="gGC-DW-lRw">
+                        <barButtonItem key="leftBarButtonItem" title="关闭" style="done" id="gst-Wf-G78">
                             <connections>
                                 <action selector="close:" destination="NNT-Nd-TQh" id="lfu-tA-pBE"/>
                             </connections>

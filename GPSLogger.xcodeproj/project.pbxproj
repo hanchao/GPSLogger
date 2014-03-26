@@ -62,6 +62,7 @@
 		D61BDD7618D1AA2B007075CA /* GPXType.m in Sources */ = {isa = PBXBuildFile; fileRef = D61BDD5D18D1AA2B007075CA /* GPXType.m */; };
 		D61BDD7718D1AA2B007075CA /* GPXWaypoint.m in Sources */ = {isa = PBXBuildFile; fileRef = D61BDD5F18D1AA2B007075CA /* GPXWaypoint.m */; };
 		D61BDD7818D1AA2B007075CA /* GPXXML.m in Sources */ = {isa = PBXBuildFile; fileRef = D61BDD6118D1AA2B007075CA /* GPXXML.m */; };
+		D621307F18E2CA400061A10A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D621308118E2CA400061A10A /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -171,6 +172,10 @@
 		D61BDD5F18D1AA2B007075CA /* GPXWaypoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPXWaypoint.m; sourceTree = "<group>"; };
 		D61BDD6018D1AA2B007075CA /* GPXXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPXXML.h; sourceTree = "<group>"; };
 		D61BDD6118D1AA2B007075CA /* GPXXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPXXML.m; sourceTree = "<group>"; };
+		D621308018E2CA400061A10A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D621308218E2CE7D0061A10A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "zh-Hans"; path = "zh-Hans.lproj/MainStoryboard.storyboard"; sourceTree = "<group>"; };
+		D621308318E2CE7D0061A10A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		D621308418E2CE7D0061A10A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -244,6 +249,7 @@
 				132C464E14D26F8C0040EAC7 /* InfoPlist.strings */,
 				132C465114D26F8C0040EAC7 /* main.m */,
 				132C465314D26F8C0040EAC7 /* GPSLogger-Prefix.pch */,
+				D621308118E2CA400061A10A /* Localizable.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -465,6 +471,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"zh-Hans",
 			);
 			mainGroup = 132C463614D26F8C0040EAC7;
 			productRefGroup = 132C464214D26F8C0040EAC7 /* Products */;
@@ -482,6 +489,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				132C465014D26F8C0040EAC7 /* InfoPlist.strings in Resources */,
+				D621307F18E2CA400061A10A /* Localizable.strings in Resources */,
 				132C465914D26F8D0040EAC7 /* MainStoryboard.storyboard in Resources */,
 				138D0FDA14D27FE300DF902E /* README.md in Resources */,
 			);
@@ -549,6 +557,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				132C464F14D26F8C0040EAC7 /* en */,
+				D621308318E2CE7D0061A10A /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -557,8 +566,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				132C465814D26F8D0040EAC7 /* en */,
+				D621308218E2CE7D0061A10A /* zh-Hans */,
 			);
 			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+		D621308118E2CA400061A10A /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D621308018E2CA400061A10A /* en */,
+				D621308418E2CE7D0061A10A /* zh-Hans */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

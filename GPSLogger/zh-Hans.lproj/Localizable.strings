@@ -1,0 +1,23 @@
+/* 
+  Localization.strings
+  GPSLogger
+
+  Created by chao han on 14-3-26.
+
+*/
+
+"Open In ..." = "打开...";
+
+"Mail this Log" = "发邮件";
+
+"Cancel" = "取消";
+
+"Error" = "错误";
+
+"Location Service not enabeld." = "定位服务无效。";
+
+"OK" = "确定";
+
+"Stop Logging" = "停止记录";
+
+"No application can be found to open the file." = "没有发现能打开此文件的程序。";

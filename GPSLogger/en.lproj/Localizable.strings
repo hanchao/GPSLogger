@@ -1,0 +1,24 @@
+/* 
+  Localization.strings
+  Localizable
+  GPSLogger
+
+  Created by chao han on 14-3-26.
+
+*/
+
+"Open In ..." = "Open In ...";
+
+"Mail this Log" = "Mail this Log";
+
+"Cancel" = "Cancel";
+
+"Error" = "Error";
+
+"Location Service not enabeld." = "Location Service not enabeld.";
+
+"OK" = "OK";
+
+"Stop Logging" = "Stop Logging";
+
+"No application can be found to open the file." = "No application can be found to open the file.";
