@@ -16,6 +16,7 @@
 #import "Functions.h"
 #import "NSManagedObject+InnerBand.h"
 #import "Coord.h"
+#import "MBProgressHUD.h"
 
 @interface MapViewController ()
 @property (strong, nonatomic) UIDocumentInteractionController *interactionController;
@@ -312,16 +313,24 @@
 {
     if (buttonIndex != actionSheet.cancelButtonIndex) {
 
-        NSString *filePath = [self createGPX];
-        
-        if (filePath) {
-            if (buttonIndex == 0) {
-                [self openFile:filePath];
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            // Do something...
+            NSString *filePath = [self createGPX];
+            sleep(3);
+            if (filePath) {
+                if (buttonIndex == 0) {
+                    [self openFile:filePath];
+                }
+                if (buttonIndex == 1) {
+                    [self mailFile:filePath];
+                }
             }
-            if (buttonIndex == 1) {
-                [self mailFile:filePath];
-            }
-        }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+            });
+        });
     }
 }
 
