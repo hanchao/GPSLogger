@@ -510,12 +510,13 @@
     self.HUD.mode = MBProgressHUDModeIndeterminate;
     self.HUD.labelText = NSLocalizedString(@"Uploading", nil);
     
-    NSDictionary * parameters = @{@"description": @"track",@"tags":@"track",@"public":@"1",@"visibility":@"public"};
+    NSDictionary * parameters = @{@"description": @"create by GPSLogger",@"tags":@"track",@"public":@"1",@"visibility":@"public"};
     
     AFHTTPRequestOperation * requestOperation = [self.httpClient POST:@"gpx/create" parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         NSURL *filePathUrl = [NSURL fileURLWithPath:filePath];
+        NSString *fileName = [filePathUrl lastPathComponent];
         
-        [formData appendPartWithFileURL:filePathUrl name:@"file" fileName:@"track" mimeType:@"gpx/xml" error:nil];
+        [formData appendPartWithFileURL:filePathUrl name:@"file" fileName:fileName mimeType:@"application/gpx+xml" error:nil];
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
          NSLog(@"ok");
         self.HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark.png"]];
