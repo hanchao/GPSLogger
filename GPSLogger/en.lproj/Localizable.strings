@@ -11,6 +11,8 @@
 
 "Mail this Log" = "Mail this Log";
 
+"Upload to OSM" = "Upload to OSM";
+
 "Cancel" = "Cancel";
 
 "Error" = "Error";
@@ -22,3 +24,11 @@
 "Stop Logging" = "Stop Logging";
 
 "No application can be found to open the file." = "No application can be found to open the file.";
+
+"Saving" = "Saving";
+
+"Uploading" = "Uploading";
+
+"Completed" = "Completed";
+
+"Failed" = "Failed";

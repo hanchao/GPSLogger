@@ -16,7 +16,8 @@
 #import "Functions.h"
 #import "NSManagedObject+InnerBand.h"
 #import "Coord.h"
-#import "MBProgressHUD.h"
+#import "GTMOAuthAuthentication.h"
+#import "GTMOAuthViewControllerTouch.h"
 
 @interface MapViewController ()
 @property (strong, nonatomic) UIDocumentInteractionController *interactionController;
@@ -42,7 +43,17 @@
 @interface MapViewController (MFMailComposeViewControllerDelegate) <MFMailComposeViewControllerDelegate>
 @end
 
+@interface MapViewController (OSMUpload)
+- (GTMOAuthAuthentication *)osmAuth;
+- (void)signIntoOSM:(GTMOAuthAuthentication *)auth;
+-(void)uploadGpx:(NSString *)filePath;
+@end
 
+@interface OSMRequestSerializer : AFHTTPRequestSerializer
+
+@property (nonatomic,strong) GTMOAuthAuthentication * auth;
+
+@end
 
 @implementation MapViewController
 
@@ -63,6 +74,8 @@
     } else {
         [self showLog];
     }
+    
+    self.HUD = [[MBProgressHUD alloc] init];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -92,6 +105,7 @@
     if ([MFMailComposeViewController canSendMail]) {
         [actionSheet addButtonWithTitle:NSLocalizedString(@"Mail this Log", nil)];
     }
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"Upload to OSM", nil)];
     [actionSheet addButtonWithTitle:NSLocalizedString(@"Cancel", nil)];
 
     // set cancel action position
@@ -313,25 +327,58 @@
 {
     if (buttonIndex != actionSheet.cancelButtonIndex) {
 
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-            // Do something...
-            NSString *filePath = [self createGPX];
-            sleep(3);
-            if (filePath) {
-                if (buttonIndex == 0) {
-                    [self openFile:filePath];
-                }
-                if (buttonIndex == 1) {
-                    [self mailFile:filePath];
-                }
+        if (buttonIndex == 2) {
+            GTMOAuthAuthentication * auth = [self osmAuth];
+            if([auth canAuthorize])
+            {
+                [self.view addSubview:self.HUD];
+                self.HUD.labelText = NSLocalizedString(@"Saving", nil);
+                [self.HUD show:YES];
+                
+                dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+                    
+                    NSString *filePath = [self createGPX];
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        //[self.HUD hide:YES];
+                        if (filePath) {
+                            [self uploadGpx:filePath];
+                        }
+                    });
+                });
             }
+            else
+            {
+                [self signIntoOSM:auth];
+            }
+        }
+        else
+        {
+            [self.view addSubview:self.HUD];
+            self.HUD.labelText = NSLocalizedString(@"Saving", nil);
+            [self.HUD show:YES];
             
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
+            dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+
+                NSString *filePath = [self createGPX];
+            
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.HUD hide:YES];
+                    if (filePath) {
+                        if (buttonIndex == 0) {
+                            [self openFile:filePath];
+                        }
+                        else if (buttonIndex == 1) {
+                            [self mailFile:filePath];
+                        }
+                    }
+                });
             });
-        });
+        }
     }
+    
+    
+
 }
 
 @end
@@ -343,6 +390,161 @@
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+@end
+
+
+#pragma mark - OSM
+@implementation MapViewController (OSMUpload)
+
+#define osmConsumerKey @"kIa5OHTBAhChzpuRO67gHTsnl1c3SXdARE1tuks8"
+#define osmConsumerSecret @"Lu6abZQsSwz7zc83tbn050Bg3hyYhxohkJzl5idr"
+
+- (GTMOAuthAuthentication *)osmAuth {
+    if (self.auth != nil) {
+        return self.auth;
+    }
+    NSString *myConsumerKey = osmConsumerKey;    // pre-registered with service
+    NSString *myConsumerSecret = osmConsumerSecret; // pre-assigned by service
+    
+    GTMOAuthAuthentication *auth;
+    auth = [[GTMOAuthAuthentication alloc] initWithSignatureMethod:kGTMOAuthSignatureMethodHMAC_SHA1
+                                                        consumerKey:myConsumerKey
+                                                         privateKey:myConsumerSecret];
+    
+    // setting the service name lets us inspect the auth object later to know
+    // what service it is for
+    auth.serviceProvider = @"GPSLogger";
+    
+    [GTMOAuthViewControllerTouch authorizeFromKeychainForName:@"GPSLogger"
+                                               authentication:auth];
+    
+    self.auth = auth;
+    return self.auth;
+}
+
+- (void)signIntoOSM:(GTMOAuthAuthentication *)auth {
+    
+    
+    NSURL *requestURL = [NSURL URLWithString:@"http://www.openstreetmap.org/oauth/request_token"];
+    NSURL *accessURL = [NSURL URLWithString:@"http://www.openstreetmap.org/oauth/access_token"];
+    NSURL *authorizeURL = [NSURL URLWithString:@"http://www.openstreetmap.org/oauth/authorize"];
+    NSString *scope = @"http://api.openstreetmap.org/";
+    
+    if (auth == nil) {
+        // perhaps display something friendlier in the UI?
+        NSLog(@"A valid consumer key and consumer secret are required for signing in to OSM");
+    }
+    
+    // set the callback URL to which the site should redirect, and for which
+    // the OAuth controller should look to determine when sign-in has
+    // finished or been canceled
+    //
+    // This URL does not need to be for an actual web page
+    [auth setCallback:@"http://www.google.com/OAuthCallback"];
+    
+    // Display the autentication view
+    GTMOAuthViewControllerTouch * viewController = [[GTMOAuthViewControllerTouch alloc] initWithScope:scope
+                                                                                             language:nil
+                                                                                      requestTokenURL:requestURL
+                                                                                    authorizeTokenURL:authorizeURL
+                                                                                       accessTokenURL:accessURL
+                                                                                       authentication:auth
+                                                                                       appServiceName:@"GPSLogger"
+                                                                                             delegate:self
+                                                                                     finishedSelector:@selector(viewController:finishedWithAuth:error:)];
+    
+    [[self navigationController] pushViewController:viewController
+                                           animated:YES];
+}
+
+- (void)viewController:(GTMOAuthViewControllerTouch *)viewController
+      finishedWithAuth:(GTMOAuthAuthentication *)auth
+                 error:(NSError *)error {
+    if (error != nil) {
+        NSLog(@"Authentication error: %@", error);
+    } else {
+        NSLog(@"Suceeed");
+        
+        [self.view addSubview:self.HUD];
+        self.HUD.labelText = NSLocalizedString(@"Saving", nil);
+        [self.HUD show:YES];
+        
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            
+            NSString *filePath = [self createGPX];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //[self.HUD hide:YES];
+                if (filePath) {
+                    [self uploadGpx:filePath];
+                }
+            });
+        });
+    }
+}
+
+
+-(AFHTTPRequestOperationManager *)httpClient
+{
+    if (!_httpClient) {
+        NSString * baseUrl = @"http://api.openstreetmap.org/api/0.6/";
+        _httpClient = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:baseUrl]];
+        
+        AFXMLParserResponseSerializer * xmlParserResponseSerializer =  [AFXMLParserResponseSerializer serializer];
+        NSMutableSet * contentTypes = [xmlParserResponseSerializer.acceptableContentTypes mutableCopy];
+        [contentTypes addObject:@"text/plain"];
+        xmlParserResponseSerializer.acceptableContentTypes = contentTypes;
+        _httpClient.responseSerializer = [AFCompoundResponseSerializer compoundSerializerWithResponseSerializers:@[[AFJSONResponseSerializer serializer],xmlParserResponseSerializer]];
+        
+        OSMRequestSerializer * requestSerializer = [OSMRequestSerializer serializer];
+        [requestSerializer setAuth:[self osmAuth]];
+        [_httpClient setRequestSerializer:requestSerializer];
+    }
+    return _httpClient;
+}
+
+-(void)uploadGpx:(NSString *)filePath
+{
+    self.HUD.mode = MBProgressHUDModeIndeterminate;
+    self.HUD.labelText = NSLocalizedString(@"Uploading", nil);
+    
+    NSDictionary * parameters = @{@"description": @"track",@"tags":@"track",@"public":@"1",@"visibility":@"public"};
+    
+    AFHTTPRequestOperation * requestOperation = [self.httpClient POST:@"gpx/create" parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        NSURL *filePathUrl = [NSURL fileURLWithPath:filePath];
+        
+        [formData appendPartWithFileURL:filePathUrl name:@"file" fileName:@"track" mimeType:@"gpx/xml" error:nil];
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+         NSLog(@"ok");
+        self.HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark.png"]];
+        self.HUD.mode = MBProgressHUDModeCustomView;
+        self.HUD.labelText = NSLocalizedString(@"Completed", nil);
+        [self.HUD hide:YES afterDelay:1.0];
+
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error %@",error);
+        self.HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"x.png"]];
+        self.HUD.mode = MBProgressHUDModeCustomView;
+        self.HUD.labelText = NSLocalizedString(@"Failed", nil);
+        [self.HUD hide:YES afterDelay:1.0];
+    }];
+    
+    [requestOperation start];
+}
+
+@end
+
+@implementation OSMRequestSerializer
+
+- (NSMutableURLRequest *)requestWithMethod:(NSString *)method URLString:(NSString *)URLString parameters:(NSDictionary *)parameters error:(NSError *__autoreleasing *)error
+{
+    NSMutableURLRequest * request = [super requestWithMethod:method URLString:URLString parameters:parameters error:error];
+    if (![method isEqualToString:@"GET"]) {
+       [self.auth authorizeRequest:request];
+    }
+    return request;
 }
 
 @end

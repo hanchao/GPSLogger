@@ -10,6 +10,8 @@
 
 "Mail this Log" = "发邮件";
 
+"Upload to OSM" = "上传到OSM";
+
 "Cancel" = "取消";
 
 "Error" = "错误";
@@ -21,3 +23,11 @@
 "Stop Logging" = "停止记录";
 
 "No application can be found to open the file." = "没有发现能打开此文件的程序。";
+
+"Saving" = "保存";
+
+"Uploading" = "上传";
+
+"Completed" = "完成";
+
+"Failed" = "失败";
