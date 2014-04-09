@@ -332,6 +332,7 @@
             if([auth canAuthorize])
             {
                 [self.view addSubview:self.HUD];
+                self.HUD.mode = MBProgressHUDModeIndeterminate;
                 self.HUD.labelText = NSLocalizedString(@"Saving", nil);
                 [self.HUD show:YES];
                 
@@ -355,6 +356,7 @@
         else
         {
             [self.view addSubview:self.HUD];
+            self.HUD.mode = MBProgressHUDModeIndeterminate;
             self.HUD.labelText = NSLocalizedString(@"Saving", nil);
             [self.HUD show:YES];
             
@@ -468,6 +470,7 @@
         NSLog(@"Suceeed");
         
         [self.view addSubview:self.HUD];
+        self.HUD.mode = MBProgressHUDModeIndeterminate;
         self.HUD.labelText = NSLocalizedString(@"Saving", nil);
         [self.HUD show:YES];
         
