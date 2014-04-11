@@ -245,7 +245,7 @@
 - (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id<MKOverlay>)overlay
 {
     MKPolylineView *overlayView = [[MKPolylineView alloc] initWithOverlay:overlay];
-    overlayView.strokeColor = [UIColor blueColor];
+    overlayView.strokeColor = [[UIColor blueColor] colorWithAlphaComponent:0.5];
     overlayView.lineWidth = 5.f;
     
     return overlayView;
