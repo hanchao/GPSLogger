@@ -171,6 +171,9 @@
             zoomRect = MKMapRectUnion(zoomRect, pointRect);
         }
     }
+    
+    zoomRect = MKMapRectInset(zoomRect,-zoomRect.size.width/4,-zoomRect.size.height/4);
+    
     [self.mapView setVisibleMapRect:zoomRect animated:NO];
 }
 
