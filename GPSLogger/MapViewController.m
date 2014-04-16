@@ -528,14 +528,14 @@
         self.HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark.png"]];
         self.HUD.mode = MBProgressHUDModeCustomView;
         self.HUD.labelText = NSLocalizedString(@"Completed", nil);
-        [self.HUD hide:YES afterDelay:1.0];
+        [self.HUD hide:YES afterDelay:2.0];
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error %@",error);
         self.HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"x.png"]];
         self.HUD.mode = MBProgressHUDModeCustomView;
         self.HUD.labelText = NSLocalizedString(@"Failed", nil);
-        [self.HUD hide:YES afterDelay:1.0];
+        [self.HUD hide:YES afterDelay:2.0];
     }];
     
     [requestOperation start];
@@ -548,6 +548,9 @@
 - (NSMutableURLRequest *)requestWithMethod:(NSString *)method URLString:(NSString *)URLString parameters:(NSDictionary *)parameters error:(NSError *__autoreleasing *)error
 {
     NSMutableURLRequest * request = [super requestWithMethod:method URLString:URLString parameters:parameters error:error];
+    
+    [request setTimeoutInterval:15];
+    
     if (![method isEqualToString:@"GET"]) {
        [self.auth authorizeRequest:request];
     }
