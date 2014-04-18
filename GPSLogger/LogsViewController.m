@@ -10,6 +10,7 @@
 #import "CoreDataStore.h"
 #import "NSManagedObject+InnerBand.h"
 #import "Track.h"
+#import "TrackPoint.h"
 #import "MapViewController.h"
 
 @interface LogsViewController ()
@@ -93,10 +94,52 @@
     Track *track = [self.tracks objectAtIndex:indexPath.row];
     
     NSDateFormatter *formatter = [NSDateFormatter new];
-    formatter.dateFormat = @"yyyy-MM-dd hh:mm:ss";
+    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     NSString *text = [formatter stringFromDate:track.created];
     
     cell.textLabel.text = text;
+    
+    
+    double distance = 0.0;
+    
+    NSArray *trackPoints = track.sotredTrackPoints;
+    CLLocation* locations[trackPoints.count];
+    
+    int i = 0;
+    for (TrackPoint *trackPoint in trackPoints) {
+        locations[i] = [[CLLocation alloc] initWithLatitude:trackPoint.latitude.doubleValue longitude:trackPoint.longitude.doubleValue];
+        i++;
+    }
+    
+    for (int i=1; i<trackPoints.count; i++) {
+        CLLocationDistance newDistance = [locations[i-1] distanceFromLocation:locations[i]];
+        distance += newDistance;
+    }
+    
+    NSString *distanceString;
+    if (distance < 1000) {
+        distanceString = [NSString stringWithFormat:@"%.2f%@", distance, NSLocalizedString(@"m", nil)];
+    }
+    else
+    {
+        distanceString = [NSString stringWithFormat:@"%.2f%@", distance/1000, NSLocalizedString(@"km", nil)];
+    }
+    
+    NSTimeInterval time = 0.0;
+    if (trackPoints.count>0) {
+        TrackPoint *startPoint = (TrackPoint *)[trackPoints firstObject];
+        TrackPoint *endPoint = (TrackPoint *)[trackPoints lastObject];
+        time = [endPoint.created timeIntervalSinceDate:startPoint.created];
+    }
+
+
+    NSUInteger seconds = (NSUInteger)round(time);
+    NSString *timeString = [NSString stringWithFormat:@"%02u:%02u:%02u",
+                        seconds / 3600, (seconds / 60) % 60, seconds % 60];
+    
+
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@ %@ %@", NSLocalizedString(@"Distance", nil), distanceString, NSLocalizedString(@"Used time", nil), timeString];
+    
 
     return cell;
 }
