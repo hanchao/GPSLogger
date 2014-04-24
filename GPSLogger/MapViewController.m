@@ -190,6 +190,7 @@
         trackpoint.latitude = [NSNumber numberWithFloat:newLocation.coordinate.latitude];
         trackpoint.longitude = [NSNumber numberWithFloat:newLocation.coordinate.longitude];
         trackpoint.altitude = [NSNumber numberWithFloat:newLocation.altitude];
+        trackpoint.speed = [NSNumber numberWithFloat:newLocation.speed];
         trackpoint.created = [NSDate date];
         [self.track addTrackpointsObject:trackpoint];
 
@@ -281,6 +282,7 @@
     for (TrackPoint *trackPoint in self.track.sotredTrackPoints) {
         GPXTrackPoint *gpxTrackPoint = [gpxTrack newTrackpointWithLatitude:trackPoint.latitude.floatValue longitude:trackPoint.longitude.floatValue];
         gpxTrackPoint.elevation = trackPoint.altitude.floatValue;
+        gpxTrackPoint.speed = trackPoint.speed.floatValue;
         gpxTrackPoint.time = trackPoint.created;
     }
     

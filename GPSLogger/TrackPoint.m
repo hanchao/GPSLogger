@@ -16,6 +16,7 @@
 @dynamic latitude;
 @dynamic created;
 @dynamic altitude;
+@dynamic speed;
 @dynamic track;
 
 

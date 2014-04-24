@@ -18,6 +18,7 @@
 @property (nonatomic, retain) NSNumber * latitude;
 @property (nonatomic, retain) NSDate * created;
 @property (nonatomic, retain) NSNumber * altitude;
+@property (nonatomic, retain) NSNumber * speed;
 @property (nonatomic, retain) Track *track;
 
 - (CLLocationCoordinate2D)coordinate;

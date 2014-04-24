@@ -24,6 +24,9 @@
 /** Elevation (in meters) of the point. */
 @property (nonatomic, assign) CGFloat elevation;
 
+/** Speed (in meters per second) of the point. */
+@property (nonatomic, assign) CGFloat speed;
+
 /** Creation/modification timestamp for element. 
     Date and time in are in Univeral Coordinated Time (UTC), not local time! 
     Conforms to ISO 8601 specification for date/time representation.
