@@ -99,6 +99,20 @@
 - (void)update
 {
     [self.tableView reloadData];
+    
+    // move last row
+    NSUInteger sectionCount = [self.tableView numberOfSections];
+    if (sectionCount) {
+        
+        NSUInteger rowCount = [self.tableView numberOfRowsInSection:sectionCount-1];
+        if (rowCount) {
+            
+            NSUInteger indexs[2] = {sectionCount-1, rowCount - 1};
+            NSIndexPath* indexPath = [NSIndexPath indexPathWithIndexes:indexs length:2];
+            [self.tableView scrollToRowAtIndexPath:indexPath
+                                  atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        }  
+    }
 }
 
 @end
