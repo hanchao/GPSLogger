@@ -36,6 +36,20 @@
 
 "km" = "千米";
 
+"m/s" = "米每秒";
+
 "Distance" = "距离";
 
 "Used time" = "用时";
+
+"Name" = "名称";
+
+"Number of Track Points" = "轨迹点数量";
+
+"Track Information" = "轨迹信息";
+
+"Track Points" = "轨迹点串";
+
+"Altitude" = "高度";
+
+"Speed" = "速度";

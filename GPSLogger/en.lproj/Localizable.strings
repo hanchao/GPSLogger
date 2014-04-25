@@ -37,6 +37,20 @@
 
 "km" = "km";
 
+"m/s" = "m/s";
+
 "Distance" = "Distance";
 
 "Used time" = "Used time";
+
+"Name" = "Name";
+
+"Number of Track Points" = "Number of Track Points";
+
+"Track Information" = "Track Information";
+
+"Track Points" = "Track Points";
+
+"Altitude" = "Altitude";
+
+"Speed" = "Speed";

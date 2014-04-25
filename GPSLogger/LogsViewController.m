@@ -11,6 +11,7 @@
 #import "NSManagedObject+InnerBand.h"
 #import "Track.h"
 #import "TrackPoint.h"
+#import "LogTabBarController.h";
 #import "MapViewController.h"
 
 @interface LogsViewController ()
@@ -59,12 +60,12 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"PushMapViewController"]) {
+    if ([segue.identifier isEqualToString:@"PushLogTabBarController"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         
         Track *track = [self.tracks objectAtIndex:indexPath.row];
 
-        MapViewController *viewController = (MapViewController *)segue.destinationViewController;
+        LogTabBarController *viewController = (LogTabBarController *)segue.destinationViewController;
         viewController.track = track;
     }
 }

@@ -76,6 +76,12 @@
 		D6261AEF18EC183D0013E1C5 /* checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6261AEB18EC183D0013E1C5 /* checkmark@2x.png */; };
 		D6261AF018EC183D0013E1C5 /* x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6261AEC18EC183D0013E1C5 /* x.png */; };
 		D6261AF118EC183D0013E1C5 /* x@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6261AED18EC183D0013E1C5 /* x@2x.png */; };
+		D62AE1381909F7AC0031D90E /* LogTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = D62AE1371909F7AC0031D90E /* LogTabBarController.m */; };
+		D62AE13B190A08920031D90E /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D62AE13A190A08920031D90E /* DetailViewController.m */; };
+		D62AE144190A402A0031D90E /* detail.png in Resources */ = {isa = PBXBuildFile; fileRef = D62AE140190A402A0031D90E /* detail.png */; };
+		D62AE145190A402A0031D90E /* detail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D62AE141190A402A0031D90E /* detail@2x.png */; };
+		D62AE146190A402A0031D90E /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = D62AE142190A402A0031D90E /* map.png */; };
+		D62AE147190A402A0031D90E /* map@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D62AE143190A402A0031D90E /* map@2x.png */; };
 		D6FD4B7E18EC1A34007E4E3C /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FD4B6C18EC1A34007E4E3C /* AFHTTPRequestOperation.m */; };
 		D6FD4B7F18EC1A34007E4E3C /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FD4B6E18EC1A34007E4E3C /* AFHTTPRequestOperationManager.m */; };
 		D6FD4B8018EC1A34007E4E3C /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FD4B7018EC1A34007E4E3C /* AFHTTPSessionManager.m */; };
@@ -215,6 +221,15 @@
 		D6261AEB18EC183D0013E1C5 /* checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkmark@2x.png"; sourceTree = "<group>"; };
 		D6261AEC18EC183D0013E1C5 /* x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = x.png; sourceTree = "<group>"; };
 		D6261AED18EC183D0013E1C5 /* x@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "x@2x.png"; sourceTree = "<group>"; };
+		D62AE1361909F7AC0031D90E /* LogTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogTabBarController.h; sourceTree = "<group>"; };
+		D62AE1371909F7AC0031D90E /* LogTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogTabBarController.m; sourceTree = "<group>"; };
+		D62AE139190A08920031D90E /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		D62AE13A190A08920031D90E /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		D62AE140190A402A0031D90E /* detail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = detail.png; sourceTree = "<group>"; };
+		D62AE141190A402A0031D90E /* detail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "detail@2x.png"; sourceTree = "<group>"; };
+		D62AE142190A402A0031D90E /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map.png; sourceTree = "<group>"; };
+		D62AE143190A402A0031D90E /* map@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map@2x.png"; sourceTree = "<group>"; };
+		D62AE148190A43E60031D90E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "zh-Hans"; path = "zh-Hans.lproj/MainStoryboard.storyboard"; sourceTree = "<group>"; };
 		D6FD4B6B18EC1A34007E4E3C /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFHTTPRequestOperation.h; path = GPSLogger/AFNetworking/AFHTTPRequestOperation.h; sourceTree = SOURCE_ROOT; };
 		D6FD4B6C18EC1A34007E4E3C /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFHTTPRequestOperation.m; path = GPSLogger/AFNetworking/AFHTTPRequestOperation.m; sourceTree = SOURCE_ROOT; };
 		D6FD4B6D18EC1A34007E4E3C /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFHTTPRequestOperationManager.h; path = GPSLogger/AFNetworking/AFHTTPRequestOperationManager.h; sourceTree = SOURCE_ROOT; };
@@ -234,7 +249,6 @@
 		D6FD4B7B18EC1A34007E4E3C /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFURLResponseSerialization.m; path = GPSLogger/AFNetworking/AFURLResponseSerialization.m; sourceTree = SOURCE_ROOT; };
 		D6FD4B7C18EC1A34007E4E3C /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFURLSessionManager.h; path = GPSLogger/AFNetworking/AFURLSessionManager.h; sourceTree = SOURCE_ROOT; };
 		D6FD4B7D18EC1A34007E4E3C /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFURLSessionManager.m; path = GPSLogger/AFNetworking/AFURLSessionManager.m; sourceTree = SOURCE_ROOT; };
-		D6FD4B8718EC1A48007E4E3C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "zh-Hans"; path = "zh-Hans.lproj/MainStoryboard.storyboard"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -331,10 +345,14 @@
 		132C466914D26FBE0040EAC7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				D62AE1361909F7AC0031D90E /* LogTabBarController.h */,
+				D62AE1371909F7AC0031D90E /* LogTabBarController.m */,
 				132C466A14D270ED0040EAC7 /* LogsViewController.h */,
 				132C466B14D270ED0040EAC7 /* LogsViewController.m */,
 				132C466D14D270FA0040EAC7 /* MapViewController.h */,
 				132C466E14D270FA0040EAC7 /* MapViewController.m */,
+				D62AE139190A08920031D90E /* DetailViewController.h */,
+				D62AE13A190A08920031D90E /* DetailViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -560,6 +578,10 @@
 		D6261AE918EC183D0013E1C5 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				D62AE140190A402A0031D90E /* detail.png */,
+				D62AE141190A402A0031D90E /* detail@2x.png */,
+				D62AE142190A402A0031D90E /* map.png */,
+				D62AE143190A402A0031D90E /* map@2x.png */,
 				D6261AEA18EC183D0013E1C5 /* checkmark.png */,
 				D6261AEB18EC183D0013E1C5 /* checkmark@2x.png */,
 				D6261AEC18EC183D0013E1C5 /* x.png */,
@@ -620,14 +642,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				132C465014D26F8C0040EAC7 /* InfoPlist.strings in Resources */,
+				D62AE147190A402A0031D90E /* map@2x.png in Resources */,
 				D6261AF118EC183D0013E1C5 /* x@2x.png in Resources */,
+				D62AE146190A402A0031D90E /* map.png in Resources */,
 				D6261A9118EBDFBC0013E1C5 /* GTMOAuthViewTouch.xib in Resources */,
 				D621307F18E2CA400061A10A /* Localizable.strings in Resources */,
+				D62AE145190A402A0031D90E /* detail@2x.png in Resources */,
 				D6261AF018EC183D0013E1C5 /* x.png in Resources */,
 				D6261AEE18EC183D0013E1C5 /* checkmark.png in Resources */,
 				132C465914D26F8D0040EAC7 /* MainStoryboard.storyboard in Resources */,
 				D62619A818EAD7970013E1C5 /* Images.xcassets in Resources */,
 				D6261AEF18EC183D0013E1C5 /* checkmark@2x.png in Resources */,
+				D62AE144190A402A0031D90E /* detail.png in Resources */,
 				138D0FDA14D27FE300DF902E /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -673,9 +699,11 @@
 				D62619A518EACC1D0013E1C5 /* MBProgressHUD.m in Sources */,
 				D6261ADB18EBE4C30013E1C5 /* GTMOAuthSignIn.m in Sources */,
 				D61BDD7418D1AA2B007075CA /* GPXTrackPoint.m in Sources */,
+				D62AE1381909F7AC0031D90E /* LogTabBarController.m in Sources */,
 				D6FD4B8218EC1A34007E4E3C /* AFSecurityPolicy.m in Sources */,
 				132C46C214D272E70040EAC7 /* NSObject+InnerBand.m in Sources */,
 				132C46C314D272E70040EAC7 /* NSString+InnerBand.m in Sources */,
+				D62AE13B190A08920031D90E /* DetailViewController.m in Sources */,
 				132C46C414D272E70040EAC7 /* UIColor+InnerBand.m in Sources */,
 				D61BDD6C18D1AA2B007075CA /* GPXParser.m in Sources */,
 				132C46C514D272E70040EAC7 /* UIImage+InnerBand.m in Sources */,
@@ -717,7 +745,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				132C465814D26F8D0040EAC7 /* en */,
-				D6FD4B8718EC1A48007E4E3C /* zh-Hans */,
+				D62AE148190A43E60031D90E /* zh-Hans */,
 			);
 			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";
