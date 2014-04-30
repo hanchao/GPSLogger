@@ -471,7 +471,7 @@
     self.HUD.mode = MBProgressHUDModeIndeterminate;
     self.HUD.labelText = NSLocalizedString(@"Uploading", nil);
     
-    NSDictionary * parameters = @{@"description": @"create by GPSLogger",@"tags":@"track",@"public":@"1",@"visibility":@"public"};
+    NSDictionary * parameters = @{@"description": @"create by GPSLogger",@"tags":@"track",@"visibility":@"identifiable"};
     
     AFHTTPRequestOperation * requestOperation = [self.httpClient POST:@"gpx/create" parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         NSURL *filePathUrl = [NSURL fileURLWithPath:filePath];
