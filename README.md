@@ -10,6 +10,11 @@ A GPS track record app
 
 # Build
 [![Build Status](https://travis-ci.org/hanchao/GPSLogger.svg?branch=master)](https://travis-ci.org/hanchao/GPSLogger)
+* clone
+```git clone https://github.com/hanchao/GPSLogger.git```
+* update dependency
+```pod install```
+* open ```GPSLogger.xcworkspace``` and run
 
 # Translation
 [![translation chart](https://www.transifex.com/projects/p/gpslogger/chart/image_png)](https://www.transifex.com/projects/p/gpslogger)
