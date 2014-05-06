@@ -67,21 +67,9 @@
                     <view key="view" contentMode="scaleToFill" id="YlW-pF-7HO">
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" id="hCM-NH-Ngx">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <connections>
-                                    <outlet property="delegate" destination="NNT-Nd-TQh" id="sj8-tt-JCY"/>
-                                </connections>
-                            </mapView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="map.png" id="biD-jG-v3X"/>
-                    <connections>
-                        <outlet property="mapView" destination="hCM-NH-Ngx" id="vvQ-hV-6vr"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OP6-0F-kla" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -90,7 +78,6 @@
         <!--Detail View Controller - Detail-->
         <scene sceneID="aiw-2E-IXj">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9VP-9a-7Yu" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="bD9-tk-RCJ" customClass="DetailViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="yNv-CP-LRk">
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
@@ -130,6 +117,7 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Detail" image="detail.png" id="Qzu-fX-CcL"/>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9VP-9a-7Yu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1638" y="473"/>
         </scene>

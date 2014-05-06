@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <MapKit/MapKit.h>
+#import <MapBox/MapBox.h>
 #import "Track.h"
 
 @interface MapViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (strong, nonatomic) RMMapView *mapView;
 @property (strong, nonatomic) Track *track;
 
 - (void)update:(CLLocation *)newLocation;

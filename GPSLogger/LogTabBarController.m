@@ -17,7 +17,6 @@
 #import "IBCoreDataStore.h"
 #import "IBFunctions.h"
 #import "NSManagedObject+InnerBand.h"
-#import "Coord.h"
 #import "GTMOAuthAuthentication.h"
 #import "GTMOAuthViewControllerTouch.h"
 

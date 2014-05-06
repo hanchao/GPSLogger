@@ -1,5 +1,6 @@
 platform :ios, '7.0'
 
+pod 'MapBox'
 pod 'InnerBand'
 pod 'AFNetworking'
 pod 'MBProgressHUD'

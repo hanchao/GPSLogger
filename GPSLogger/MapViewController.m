@@ -14,7 +14,6 @@
 #import "IBCoreDataStore.h"
 #import "IBFunctions.h"
 #import "NSManagedObject+InnerBand.h"
-#import "Coord.h"
 #import "GTMOAuthAuthentication.h"
 #import "GTMOAuthViewControllerTouch.h"
 
@@ -22,7 +21,7 @@
 - (void)showLog;
 @end
 
-@interface MapViewController (MKMapViewDelegate) <MKMapViewDelegate>
+@interface MapViewController (MKMapViewDelegate) <RMMapViewDelegate>
 - (void)updateOverlay;
 @end
 
@@ -31,13 +30,27 @@
 @synthesize mapView = __mapView;
 @synthesize track = __track;
 
+#define kNormalMapID @"examples.map-vyofok3q"
+#define kRetinaMapID @"examples.map-vyofok3q"
 
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
+    RMMapboxSource *tileSource = [[RMMapboxSource alloc] initWithMapID:@"examples.map-z2effxa8"];
+    
+    self.mapView = [[RMMapView alloc] initWithFrame:self.view.bounds andTilesource:tileSource];
+    
+    [self.view addSubview:self.mapView];
+    
+    self.mapView.showsUserLocation = YES;
+    
+    self.mapView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    
+    self.mapView.delegate = self;
+    
     if (self.track) {
         [self showLog];
     }
@@ -53,8 +66,7 @@
     [self updateOverlay];
     
     CLLocationCoordinate2D coordinate = newLocation.coordinate;
-    GpsCoorEncrypt(&coordinate.longitude, &coordinate.latitude);
-    
+
     // set new location as center
     [self.mapView setCenterCoordinate:coordinate animated:YES];
 }
@@ -68,33 +80,41 @@
     if (self.track.trackpoints.count == 0) {
         // initialize map position
         CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(39.907333, 116.391083);
-        MKCoordinateSpan span = MKCoordinateSpanMake(0.05f, 0.05f);
-        MKCoordinateRegion region = MKCoordinateRegionMake(coordinate, span);
-        [self.mapView setRegion:region];
+        
+        [self.mapView setZoom:12 atCoordinate:coordinate animated:NO];
         return;
     }
-    //
-    // Thanks for elegant code!
-    // https://gist.github.com/915374
-    //
-    MKMapRect zoomRect = MKMapRectNull;
+    
+    CLLocationCoordinate2D southWest;
+    CLLocationCoordinate2D northEast;
+    
+    southWest.longitude = 180;
+    southWest.latitude = 90;
+    northEast.longitude = -180;
+    northEast.latitude = -90;
     for (TrackPoint *trackPoint in self.track.trackpoints) {
-        CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(trackPoint.latitude.floatValue, trackPoint.longitude.floatValue);
-        
-        GpsCoorEncrypt(&coordinate.longitude, &coordinate.latitude);
-        
-        MKMapPoint annotationPoint = MKMapPointForCoordinate(coordinate);
-        MKMapRect pointRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 0, 0);
-        if (MKMapRectIsNull(zoomRect)) {
-            zoomRect = pointRect;
-        } else {
-            zoomRect = MKMapRectUnion(zoomRect, pointRect);
+        if (trackPoint.longitude.floatValue < southWest.longitude) {
+            southWest.longitude = trackPoint.longitude.floatValue;
+        }
+        if (trackPoint.longitude.floatValue > northEast.longitude) {
+            northEast.longitude = trackPoint.longitude.floatValue;
+        }
+        if (trackPoint.latitude.floatValue < southWest.latitude) {
+            southWest.latitude = trackPoint.latitude.floatValue;
+        }
+        if (trackPoint.latitude.floatValue > northEast.latitude) {
+            northEast.latitude = trackPoint.latitude.floatValue;
         }
     }
+    double width = northEast.longitude - southWest.longitude;
+    southWest.longitude -= width/4;
+    northEast.longitude += width/4;
     
-    zoomRect = MKMapRectInset(zoomRect,-zoomRect.size.width/4,-zoomRect.size.height/4);
+    double height  = northEast.latitude - southWest.latitude;
+    southWest.latitude -= height/4;
+    northEast.latitude += height/4;
     
-    [self.mapView setVisibleMapRect:zoomRect animated:NO];
+    [self.mapView zoomWithLatitudeLongitudeBoundsSouthWest:southWest northEast:northEast animated:NO];
 }
 
 @end
@@ -110,31 +130,25 @@
     }
 
     NSArray *trackPoints = self.track.sotredTrackPoints;
-
-    CLLocationCoordinate2D coors[trackPoints.count];
     
-    int i = 0;
+    if (trackPoints.count == 0) {
+        return;
+    }
+
+    NSMutableArray *locations = [[NSMutableArray alloc] init];
+
     for (TrackPoint *trackPoint in trackPoints) {
-        coors[i] = trackPoint.coordinate;
-        
-        GpsCoorEncrypt(&coors[i].longitude, &coors[i].latitude);
-        i++;
+        CLLocation *location = [[CLLocation alloc] initWithLatitude:trackPoint.latitude.floatValue longitude:trackPoint.longitude.floatValue];
+        [locations addObject:location];
     }
     
-    MKPolyline *line = [MKPolyline polylineWithCoordinates:coors count:trackPoints.count];
-
-    // replace overlay
-    [self.mapView removeOverlays:self.mapView.overlays];
-    [self.mapView addOverlay:line];
-}
-
-- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id<MKOverlay>)overlay
-{
-    MKPolylineView *overlayView = [[MKPolylineView alloc] initWithOverlay:overlay];
-    overlayView.strokeColor = [[UIColor blueColor] colorWithAlphaComponent:0.5];
-    overlayView.lineWidth = 5.f;
+    RMPolylineAnnotation *annotation = [[RMPolylineAnnotation alloc] initWithMapView:self.mapView points:locations];
+       
+    annotation.lineColor = [[UIColor blueColor] colorWithAlphaComponent:0.5];
+    annotation.lineWidth = 5.0;
     
-    return overlayView;
+    [self.mapView removeAllAnnotations];
+    [self.mapView addAnnotation:annotation];
 }
 
 @end

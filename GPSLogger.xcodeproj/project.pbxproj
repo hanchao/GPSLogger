@@ -24,7 +24,6 @@
 		132C46E014D273F20040EAC7 /* TrackPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 132C46DF14D273F20040EAC7 /* TrackPoint.m */; };
 		132C46E214D274110040EAC7 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 132C46E114D274110040EAC7 /* CoreData.framework */; };
 		49F38B739AFD472EAB566D32 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C85175D0004CF38AF3B64F /* libPods.a */; };
-		D61BDD6218D1AA2B007075CA /* Coord.c in Sources */ = {isa = PBXBuildFile; fileRef = D61BDD3118D1AA2B007075CA /* Coord.c */; };
 		D61BDD6318D1AA2B007075CA /* GPXAuthor.m in Sources */ = {isa = PBXBuildFile; fileRef = D61BDD3618D1AA2B007075CA /* GPXAuthor.m */; };
 		D61BDD6418D1AA2B007075CA /* GPXBounds.m in Sources */ = {isa = PBXBuildFile; fileRef = D61BDD3818D1AA2B007075CA /* GPXBounds.m */; };
 		D61BDD6518D1AA2B007075CA /* GPXConst.m in Sources */ = {isa = PBXBuildFile; fileRef = D61BDD3A18D1AA2B007075CA /* GPXConst.m */; };
@@ -62,6 +61,9 @@
 		D62AE146190A402A0031D90E /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = D62AE142190A402A0031D90E /* map.png */; };
 		D62AE147190A402A0031D90E /* map@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D62AE143190A402A0031D90E /* map@2x.png */; };
 		D62DCD4C1918B342006FF205 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D62DCD4B1918B342006FF205 /* MobileCoreServices.framework */; };
+		D62DCD4E1918BD11006FF205 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D62DCD4D1918BD11006FF205 /* libsqlite3.dylib */; };
+		D62DCD501918BD34006FF205 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D62DCD4F1918BD34006FF205 /* libz.dylib */; };
+		D62DCD521918BED1006FF205 /* libProj4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D62DCD511918BED1006FF205 /* libProj4.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,8 +93,6 @@
 		132C46E114D274110040EAC7 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		47C85175D0004CF38AF3B64F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C84C8BFCB6343869A3D38AA /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
-		D61BDD3118D1AA2B007075CA /* Coord.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Coord.c; sourceTree = "<group>"; };
-		D61BDD3218D1AA2B007075CA /* Coord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coord.h; sourceTree = "<group>"; };
 		D61BDD3418D1AA2B007075CA /* GPX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPX.h; sourceTree = "<group>"; };
 		D61BDD3518D1AA2B007075CA /* GPXAuthor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPXAuthor.h; sourceTree = "<group>"; };
 		D61BDD3618D1AA2B007075CA /* GPXAuthor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPXAuthor.m; sourceTree = "<group>"; };
@@ -159,6 +159,9 @@
 		D62AE143190A402A0031D90E /* map@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map@2x.png"; sourceTree = "<group>"; };
 		D62AE148190A43E60031D90E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "zh-Hans"; path = "zh-Hans.lproj/MainStoryboard.storyboard"; sourceTree = "<group>"; };
 		D62DCD4B1918B342006FF205 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		D62DCD4D1918BD11006FF205 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		D62DCD4F1918BD34006FF205 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		D62DCD511918BED1006FF205 /* libProj4.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libProj4.a; path = Pods/MapBox/Proj4/libProj4.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +169,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D62DCD521918BED1006FF205 /* libProj4.a in Frameworks */,
+				D62DCD501918BD34006FF205 /* libz.dylib in Frameworks */,
+				D62DCD4E1918BD11006FF205 /* libsqlite3.dylib in Frameworks */,
 				D62DCD4C1918B342006FF205 /* MobileCoreServices.framework in Frameworks */,
 				D6261AE318EBE8020013E1C5 /* SystemConfiguration.framework in Frameworks */,
 				D6261AE118EBE7D50013E1C5 /* Security.framework in Frameworks */,
@@ -204,6 +210,9 @@
 		132C464414D26F8C0040EAC7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D62DCD511918BED1006FF205 /* libProj4.a */,
+				D62DCD4F1918BD34006FF205 /* libz.dylib */,
+				D62DCD4D1918BD11006FF205 /* libsqlite3.dylib */,
 				D62DCD4B1918B342006FF205 /* MobileCoreServices.framework */,
 				D6261AE218EBE8020013E1C5 /* SystemConfiguration.framework */,
 				D6261ADF18EBE7BF0013E1C5 /* Security.framework */,
@@ -223,7 +232,6 @@
 			isa = PBXGroup;
 			children = (
 				132C465714D26F8D0040EAC7 /* MainStoryboard.storyboard */,
-				D61BDD3018D1AA2B007075CA /* Coord */,
 				D61BDD3318D1AA2B007075CA /* GPX */,
 				132C467314D272000040EAC7 /* Model */,
 				132C466814D26FB20040EAC7 /* App Delegate */,
@@ -281,15 +289,6 @@
 				132C46DF14D273F20040EAC7 /* TrackPoint.m */,
 			);
 			name = Model;
-			sourceTree = "<group>";
-		};
-		D61BDD3018D1AA2B007075CA /* Coord */ = {
-			isa = PBXGroup;
-			children = (
-				D61BDD3118D1AA2B007075CA /* Coord.c */,
-				D61BDD3218D1AA2B007075CA /* Coord.h */,
-			);
-			path = Coord;
 			sourceTree = "<group>";
 		};
 		D61BDD3318D1AA2B007075CA /* GPX */ = {
@@ -472,7 +471,6 @@
 				D61BDD7318D1AA2B007075CA /* GPXTrack.m in Sources */,
 				D61BDD7218D1AA2B007075CA /* GPXRoutePoint.m in Sources */,
 				D61BDD6E18D1AA2B007075CA /* GPXPoint.m in Sources */,
-				D61BDD6218D1AA2B007075CA /* Coord.c in Sources */,
 				D61BDD7118D1AA2B007075CA /* GPXRoute.m in Sources */,
 				132C465214D26F8C0040EAC7 /* main.m in Sources */,
 				132C465614D26F8C0040EAC7 /* AppDelegate.m in Sources */,
@@ -616,6 +614,10 @@
 				GCC_PREFIX_HEADER = "GPSLogger/GPSLogger-Prefix.pch";
 				INFOPLIST_FILE = "GPSLogger/GPSLogger-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/MapBox/Proj4",
+				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -639,6 +641,10 @@
 				GCC_PREFIX_HEADER = "GPSLogger/GPSLogger-Prefix.pch";
 				INFOPLIST_FILE = "GPSLogger/GPSLogger-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/MapBox/Proj4",
+				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
