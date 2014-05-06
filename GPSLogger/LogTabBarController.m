@@ -14,8 +14,8 @@
 #import "GPX.h"
 #import "TrackPoint.h"
 // Inngerband
-#import "CoreDataStore.h"
-#import "Functions.h"
+#import "IBCoreDataStore.h"
+#import "IBFunctions.h"
 #import "NSManagedObject+InnerBand.h"
 #import "Coord.h"
 #import "GTMOAuthAuthentication.h"
@@ -168,10 +168,10 @@
         self.locationManager.distanceFilter = 10.0f;
         
         [self.locationManager startUpdatingLocation];
-        
+
         self.track = [Track create];
         self.track.created = [NSDate date];
-        [[CoreDataStore mainStore] save];
+        [[IBCoreDataStore mainStore] save];
     }
 }
 
@@ -191,7 +191,7 @@
         trackpoint.created = [NSDate date];
         [self.track addTrackpointsObject:trackpoint];
         
-        [[CoreDataStore mainStore] save];
+        [[IBCoreDataStore mainStore] save];
         
         if([self.selectedViewController isKindOfClass:[MapViewController class]]){
             MapViewController *mapViewController = (MapViewController *)self.selectedViewController;

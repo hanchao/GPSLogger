@@ -7,11 +7,12 @@
 //
 
 #import "LogsViewController.h"
-#import "CoreDataStore.h"
+#import "IBCoreDataStore.h"
+#import "IBFunctions.h"
 #import "NSManagedObject+InnerBand.h"
 #import "Track.h"
 #import "TrackPoint.h"
-#import "LogTabBarController.h";
+#import "LogTabBarController.h"
 #import "MapViewController.h"
 
 @interface LogsViewController ()
@@ -38,6 +39,7 @@
     [super viewDidLoad];
     
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -45,7 +47,7 @@
     [super viewWillAppear:animated];
     
     NSError *error;
-    self.tracks = [[CoreDataStore mainStore] allForEntity:@"Track" orderBy:@"created" ascending:NO error:&error];
+    self.tracks = [[IBCoreDataStore mainStore] allForEntity:@"Track" orderBy:@"created" ascending:NO error:&error];
     if (error) {
         NSLog(@"%@", error);
     }
@@ -161,7 +163,7 @@
         self.tracks = [NSArray arrayWithArray:array];
         
         [track destroy];
-        [[CoreDataStore mainStore] save];
+        [[IBCoreDataStore mainStore] save];
         
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }

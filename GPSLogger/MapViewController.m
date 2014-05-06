@@ -11,9 +11,8 @@
 #import "GPX.h"
 #import "MapViewController.h"
 #import "TrackPoint.h"
-// Inngerband
-#import "CoreDataStore.h"
-#import "Functions.h"
+#import "IBCoreDataStore.h"
+#import "IBFunctions.h"
 #import "NSManagedObject+InnerBand.h"
 #import "Coord.h"
 #import "GTMOAuthAuthentication.h"
