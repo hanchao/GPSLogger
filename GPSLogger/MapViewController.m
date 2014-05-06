@@ -20,13 +20,7 @@
 #import "GTMOAuthViewControllerTouch.h"
 
 @interface MapViewController ()
-@property (strong, nonatomic) UIDocumentInteractionController *interactionController;
-@property (strong, nonatomic) CLLocationManager *locationManager;
-- (void)startLogging;
 - (void)showLog;
-@end
-
-@interface MapViewController (CLLocationManagerDelegate) <CLLocationManagerDelegate>
 @end
 
 @interface MapViewController (MKMapViewDelegate) <MKMapViewDelegate>
@@ -48,7 +42,6 @@
     if (self.track) {
         [self showLog];
     }
-   // self.edgesForExtendedLayout = UIRectEdgeNone;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -68,38 +61,6 @@
 }
 
 #pragma mark - Private methods
-
-- (void)startLogging
-{
-    // initialize map position
-    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(37.332408, -122.030490);
-    MKCoordinateSpan span = MKCoordinateSpanMake(0.05f, 0.05f);
-    MKCoordinateRegion region = MKCoordinateRegionMake(coordinate, span);
-    [self.mapView setRegion:region];
-
-    // initialize location manager
-    if (![CLLocationManager locationServicesEnabled]) {
-        self.navigationItem.rightBarButtonItem.enabled = NO;
-
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
-                                                            message:NSLocalizedString(@"Location Service not enabeld.", nil)
-                                                           delegate:nil
-                                                  cancelButtonTitle:NSLocalizedString(@"OK", nil)
-                                                  otherButtonTitles:nil];
-        [alertView show];
-        
-    } else {
-        self.navigationItem.leftBarButtonItem.title = NSLocalizedString(@"Stop Logging", nil);
-        
-        self.locationManager = [CLLocationManager new];
-        self.locationManager.delegate = self;
-        [self.locationManager startUpdatingLocation];
-        
-        self.track = [Track create];
-        self.track.created = [NSDate date];
-        [[CoreDataStore mainStore] save];
-    }
-}
 
 - (void)showLog
 {
@@ -135,41 +96,6 @@
     zoomRect = MKMapRectInset(zoomRect,-zoomRect.size.width/4,-zoomRect.size.height/4);
     
     [self.mapView setVisibleMapRect:zoomRect animated:NO];
-}
-
-@end
-
-
-#pragma mark -
-@implementation MapViewController (CLLocationManagerDelegate)
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
-{
-    if (newLocation) {
-        TrackPoint *trackpoint = [TrackPoint create];
-        trackpoint.latitude = [NSNumber numberWithFloat:newLocation.coordinate.latitude];
-        trackpoint.longitude = [NSNumber numberWithFloat:newLocation.coordinate.longitude];
-        trackpoint.altitude = [NSNumber numberWithFloat:newLocation.altitude];
-        trackpoint.speed = [NSNumber numberWithFloat:newLocation.speed];
-        trackpoint.created = [NSDate date];
-        [self.track addTrackpointsObject:trackpoint];
-
-        [[CoreDataStore mainStore] save];
-
-        // update annotation and overlay
-        [self updateOverlay];
-        
-        CLLocationCoordinate2D coordinate = newLocation.coordinate;
-        GpsCoorEncrypt(&coordinate.longitude, &coordinate.latitude);
-
-        // set new location as center
-        [self.mapView setCenterCoordinate:coordinate animated:YES];
-    }
-}
-
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-{
-    NSLog(@"error, %@", error);
 }
 
 @end
