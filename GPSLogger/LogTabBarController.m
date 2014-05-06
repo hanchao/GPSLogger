@@ -163,6 +163,10 @@
         
         self.locationManager = [CLLocationManager new];
         self.locationManager.delegate = self;
+
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        self.locationManager.distanceFilter = 10.0f;
+        
         [self.locationManager startUpdatingLocation];
         
         self.track = [Track create];
