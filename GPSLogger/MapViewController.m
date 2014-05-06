@@ -30,8 +30,11 @@
 @synthesize mapView = __mapView;
 @synthesize track = __track;
 
-#define kNormalMapID @"examples.map-vyofok3q"
-#define kRetinaMapID @"examples.map-vyofok3q"
+#define STREETS_MAP_ID @"examples.map-vyofok3q"
+
+#define TERRAIN_MAP_ID @"examples.map-9ijuk24y"
+
+#define SATELLITE_MAP_ID @"examples.map-qfyrx5r8"
 
 #pragma mark - View lifecycle
 
@@ -39,7 +42,7 @@
 {
     [super viewDidLoad];
     
-    RMMapboxSource *tileSource = [[RMMapboxSource alloc] initWithMapID:@"examples.map-z2effxa8"];
+    RMMapboxSource *tileSource = [[RMMapboxSource alloc] initWithMapID:TERRAIN_MAP_ID];
     
     self.mapView = [[RMMapView alloc] initWithFrame:self.view.bounds andTilesource:tileSource];
     
