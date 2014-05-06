@@ -18,6 +18,7 @@
 #import "GTMOAuthViewControllerTouch.h"
 
 @interface MapViewController ()
+- (id <RMTileSource>)getTilesource;
 - (void)showLog;
 @end
 
@@ -42,7 +43,11 @@
 {
     [super viewDidLoad];
     
-    RMMapboxSource *tileSource = [[RMMapboxSource alloc] initWithMapID:TERRAIN_MAP_ID];
+    id <RMTileSource> tileSource = [self getTilesource];
+    
+    if(tileSource == nil)
+        return;
+    
     
     self.mapView = [[RMMapView alloc] initWithFrame:self.view.bounds andTilesource:tileSource];
     
@@ -75,6 +80,28 @@
 }
 
 #pragma mark - Private methods
+
+- (id <RMTileSource>)getTilesource
+{
+    RMMapboxSource *tileSource;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *tileJSON = [defaults stringForKey:@"tileJSON"];
+    if (tileJSON)
+    {
+        tileSource = [[RMMapboxSource alloc] initWithTileJSON:tileJSON];
+    }
+    else
+    {
+        tileSource = [[RMMapboxSource alloc] initWithMapID:TERRAIN_MAP_ID];
+        if (tileSource)
+        {
+            [defaults setObject:tileSource.tileJSON forKey:@"tileJSON"];
+            [defaults synchronize];
+        }
+    }
+    return tileSource;
+}
 
 - (void)showLog
 {
