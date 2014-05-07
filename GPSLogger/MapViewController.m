@@ -177,6 +177,10 @@
     annotation.lineColor = [[UIColor blueColor] colorWithAlphaComponent:0.5];
     annotation.lineWidth = 5.0;
     
+    RMShape* shape = (RMShape*)annotation.layer;
+    shape.lineCap = @"round";
+    shape.lineJoin = @"round";
+    
     [self.mapView removeAllAnnotations];
     [self.mapView addAnnotation:annotation];
 }
