@@ -182,6 +182,12 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
     if (newLocation) {
+        
+        if (newLocation.horizontalAccuracy < 0) {
+            NSLog(@"Bad returned accuracy, ignoring update.");
+            return;
+        }
+        
         TrackPoint *trackpoint = [TrackPoint create];
         trackpoint.latitude = [NSNumber numberWithFloat:newLocation.coordinate.latitude];
         trackpoint.longitude = [NSNumber numberWithFloat:newLocation.coordinate.longitude];
