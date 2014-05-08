@@ -15,6 +15,6 @@
 @property (strong, nonatomic) RMMapView *mapView;
 @property (strong, nonatomic) Track *track;
 
-- (void)update:(CLLocation *)newLocation;
+- (void)update;
 
 @end

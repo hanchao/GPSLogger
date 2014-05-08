@@ -64,16 +64,33 @@
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self updateOverlay];
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)update:(CLLocation *)newLocation
+- (void)update
 {
     [self updateOverlay];
     
-    CLLocationCoordinate2D coordinate = newLocation.coordinate;
+    NSArray *trackPoints = self.track.sotredTrackPoints;
+    
+    if (trackPoints.count == 0) {
+        return;
+    }
+    
+    TrackPoint *trackPoint = (TrackPoint *)[trackPoints lastObject];
+    
+    CLLocationCoordinate2D coordinate;
+    coordinate.latitude = trackPoint.latitude.floatValue;
+    coordinate.longitude = trackPoint.longitude.floatValue;
 
     // set new location as center
     [self.mapView setCenterCoordinate:coordinate animated:YES];

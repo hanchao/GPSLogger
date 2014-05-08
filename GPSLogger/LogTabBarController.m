@@ -188,6 +188,11 @@
             return;
         }
         
+        if (newLocation.speed < 0) {
+            NSLog(@"Bad returned speed, ignoring update.");
+            return;
+        }
+        
         TrackPoint *trackpoint = [TrackPoint create];
         trackpoint.latitude = [NSNumber numberWithFloat:newLocation.coordinate.latitude];
         trackpoint.longitude = [NSNumber numberWithFloat:newLocation.coordinate.longitude];
@@ -200,7 +205,7 @@
         
         if([self.selectedViewController isKindOfClass:[MapViewController class]]){
             MapViewController *mapViewController = (MapViewController *)self.selectedViewController;
-            [mapViewController update:newLocation];
+            [mapViewController update];
         }
         
         if([self.selectedViewController isKindOfClass:[DetailViewController class]]){
