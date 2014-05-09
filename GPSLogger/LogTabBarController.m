@@ -163,7 +163,7 @@
         self.locationManager = [CLLocationManager new];
         self.locationManager.delegate = self;
 
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
         self.locationManager.distanceFilter = 10.0f;
         
         [self.locationManager startUpdatingLocation];
@@ -198,7 +198,7 @@
         trackpoint.longitude = [NSNumber numberWithFloat:newLocation.coordinate.longitude];
         trackpoint.altitude = [NSNumber numberWithFloat:newLocation.altitude];
         trackpoint.speed = [NSNumber numberWithFloat:newLocation.speed];
-        trackpoint.created = [NSDate date];
+        trackpoint.created = newLocation.timestamp;
         [self.track addTrackpointsObject:trackpoint];
         
         [[IBCoreDataStore mainStore] save];
