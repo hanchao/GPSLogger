@@ -2,6 +2,8 @@
 
 A GPS track record app
 
+[![App Store](http://linkmaker.itunes.apple.com/htmlResources/assets/images/web/linkmaker/badge_appstore-lrg.svg)](http://itunes.apple.com/us/app/gpslogger/id859076064?l=zh&ls=1&mt=8)
+
 # Features
 * Record GPS track 
 * View history track 
