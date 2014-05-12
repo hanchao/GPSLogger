@@ -2,6 +2,7 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13C1021" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Track" representedClassName="Track" syncable="YES">
         <attribute name="created" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="trackpoints" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TrackPoint" inverseName="track" inverseEntity="TrackPoint" syncable="YES"/>
     </entity>
     <entity name="TrackPoint" representedClassName="TrackPoint" syncable="YES">
@@ -13,7 +14,7 @@
         <relationship name="track" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Track" inverseName="trackpoints" inverseEntity="Track" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Track" positionX="160" positionY="192" width="128" height="75"/>
+        <element name="Track" positionX="160" positionY="192" width="128" height="90"/>
         <element name="TrackPoint" positionX="160" positionY="192" width="128" height="135"/>
     </elements>
 </model>

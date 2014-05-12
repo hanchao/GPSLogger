@@ -170,6 +170,11 @@
 
         self.track = [Track create];
         self.track.created = [NSDate date];
+        
+        NSDateFormatter *formatter = [NSDateFormatter new];
+        formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+        self.track.name = [formatter stringFromDate:self.track.created];
+        
         [[IBCoreDataStore mainStore] save];
     }
 }
@@ -227,11 +232,7 @@
 
 - (NSString *)gpxFilePath
 {
-    NSDateFormatter *formatter = [NSDateFormatter new];
-    [formatter setTimeStyle:NSDateFormatterFullStyle];
-    [formatter setDateFormat:@"yyyyMMddHHmmss"];
-    NSString *dateString = [formatter stringFromDate:[NSDate date]];
-    
+    NSString *dateString = self.track.name;
     NSString *fileName = [NSString stringWithFormat:@"log_%@.gpx", dateString];
     return [NSTemporaryDirectory() stringByAppendingPathComponent:fileName];
 }
@@ -243,7 +244,7 @@
     
     // gpx > trk
     GPXTrack *gpxTrack = [gpx newTrack];
-    gpxTrack.name = @"New Track";
+    gpxTrack.name = self.track.name;
     
     // gpx > trk > trkseg > trkpt
     for (TrackPoint *trackPoint in self.track.sotredTrackPoints) {

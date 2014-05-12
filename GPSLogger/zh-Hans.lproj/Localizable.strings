@@ -59,3 +59,18 @@
 "Map" = "地图";
 
 "Detail" = "详情";
+
+"Input Name" = "输入名称";
+
+"Max Speed" = "最大速度";
+
+"Min Speed" = "最小速度";
+
+"Average Speed" = "平均速度";
+
+"Max Altitude" = "最大海拔高度";
+
+"Min Altitude" = "最小海拔高度";
+
+"Average Altitude" = "平均海拔高度";
+

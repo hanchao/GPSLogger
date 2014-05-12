@@ -13,10 +13,19 @@
 
 @interface Track : NSManagedObject
 
+@property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSDate * created;
 @property (nonatomic, retain) NSSet *trackpoints;
 
 - (NSArray *)sotredTrackPoints;
+- (double)distance;
+- (NSTimeInterval )usedTime;
+- (double)maxSpeed;
+- (double)minSpeed;
+- (double)averageSpeed;
+- (double)maxAltitude;
+- (double)minAltitude;
+- (double)averageAltitude;
 
 @end
 
