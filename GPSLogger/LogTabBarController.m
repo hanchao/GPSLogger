@@ -465,9 +465,11 @@
             
             if (location == nil)
             {
+                [self.view addSubview:self.HUD];
                 self.HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"x.png"]];
                 self.HUD.mode = MBProgressHUDModeCustomView;
                 self.HUD.labelText = NSLocalizedString(@"Unable to locate", nil);
+                [self.HUD show:YES];
                 [self.HUD hide:YES afterDelay:2.0];
                 
                 return;
