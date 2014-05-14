@@ -66,7 +66,10 @@
     double maxSpeed = 0.0;
     
     NSArray *trackPoints = self.sotredTrackPoints;
-
+    if (trackPoints.count == 0)
+    {
+        return 0.0;
+    }
     for (TrackPoint *trackPoint in trackPoints)
     {
         if (trackPoint.speed.floatValue > maxSpeed)
@@ -82,7 +85,10 @@
     double minSpeed = 1.79769313486232E+308;
     
     NSArray *trackPoints = self.sotredTrackPoints;
-    
+    if (trackPoints.count == 0)
+    {
+        return 0.0;
+    }
     for (TrackPoint *trackPoint in trackPoints)
     {
         if (trackPoint.speed.floatValue < minSpeed)
@@ -98,7 +104,10 @@
     double allSpeed = 0.0;
     
     NSArray *trackPoints = self.sotredTrackPoints;
-    
+    if (trackPoints.count == 0)
+    {
+        return 0.0;
+    }
     for (TrackPoint *trackPoint in trackPoints)
     {
         allSpeed += trackPoint.speed.floatValue;
@@ -111,7 +120,10 @@
     double maxAltitude = 0.0;
     
     NSArray *trackPoints = self.sotredTrackPoints;
-    
+    if (trackPoints.count == 0)
+    {
+        return 0.0;
+    }
     for (TrackPoint *trackPoint in trackPoints)
     {
         if (trackPoint.altitude.floatValue > maxAltitude)
@@ -127,7 +139,10 @@
     double minAltitude = 1.79769313486232E+308;
     
     NSArray *trackPoints = self.sotredTrackPoints;
-    
+    if (trackPoints.count == 0)
+    {
+        return 0.0;
+    }
     for (TrackPoint *trackPoint in trackPoints)
     {
         if (trackPoint.altitude.floatValue < minAltitude)
@@ -143,7 +158,10 @@
     double allAltitude = 0.0;
     
     NSArray *trackPoints = self.sotredTrackPoints;
-    
+    if (trackPoints.count == 0)
+    {
+        return 0.0;
+    }
     for (TrackPoint *trackPoint in trackPoints)
     {
         allAltitude += trackPoint.altitude.floatValue;
