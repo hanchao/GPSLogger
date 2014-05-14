@@ -64,6 +64,7 @@
 		D62DCD4E1918BD11006FF205 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D62DCD4D1918BD11006FF205 /* libsqlite3.dylib */; };
 		D62DCD501918BD34006FF205 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D62DCD4F1918BD34006FF205 /* libz.dylib */; };
 		D62DCD521918BED1006FF205 /* libProj4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D62DCD511918BED1006FF205 /* libProj4.a */; };
+		D66992DD19235AF50046F95A /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D66992DC19235AF50046F95A /* PhotoViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -162,6 +163,8 @@
 		D62DCD4D1918BD11006FF205 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		D62DCD4F1918BD34006FF205 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		D62DCD511918BED1006FF205 /* libProj4.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libProj4.a; path = Pods/MapBox/Proj4/libProj4.a; sourceTree = "<group>"; };
+		D66992DB19235AF50046F95A /* PhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoViewController.h; sourceTree = "<group>"; };
+		D66992DC19235AF50046F95A /* PhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -275,6 +278,8 @@
 				132C466E14D270FA0040EAC7 /* MapViewController.m */,
 				D62AE139190A08920031D90E /* DetailViewController.h */,
 				D62AE13A190A08920031D90E /* DetailViewController.m */,
+				D66992DB19235AF50046F95A /* PhotoViewController.h */,
+				D66992DC19235AF50046F95A /* PhotoViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -388,6 +393,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0510;
+				TargetAttributes = {
+					132C464014D26F8C0040EAC7 = {
+						DevelopmentTeam = CRYDBENHJU;
+					};
+				};
 			};
 			buildConfigurationList = 132C463B14D26F8C0040EAC7 /* Build configuration list for PBXProject "GPSLogger" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -492,6 +502,7 @@
 				D61BDD6B18D1AA2B007075CA /* GPXMetadata.m in Sources */,
 				D61BDD7618D1AA2B007075CA /* GPXType.m in Sources */,
 				D61BDD7718D1AA2B007075CA /* GPXWaypoint.m in Sources */,
+				D66992DD19235AF50046F95A /* PhotoViewController.m in Sources */,
 				D61BDD6D18D1AA2B007075CA /* GPXPerson.m in Sources */,
 				D61BDD6818D1AA2B007075CA /* GPXEmail.m in Sources */,
 				D61BDD6718D1AA2B007075CA /* GPXElement.m in Sources */,
@@ -606,6 +617,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -620,6 +632,7 @@
 				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -632,7 +645,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -647,6 +660,7 @@
 				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

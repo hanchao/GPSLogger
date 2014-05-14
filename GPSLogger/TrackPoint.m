@@ -12,11 +12,13 @@
 
 @implementation TrackPoint
 
+@dynamic name;
 @dynamic longitude;
 @dynamic latitude;
 @dynamic created;
 @dynamic altitude;
 @dynamic speed;
+@dynamic image;
 @dynamic track;
 
 

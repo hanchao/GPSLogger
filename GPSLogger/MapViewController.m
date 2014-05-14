@@ -16,6 +16,7 @@
 #import "NSManagedObject+InnerBand.h"
 #import "GTMOAuthAuthentication.h"
 #import "GTMOAuthViewControllerTouch.h"
+#import "PhotoViewController.h"
 
 @interface MapViewController ()
 - (id <RMTileSource>)getTilesource;
@@ -26,10 +27,15 @@
 - (void)updateOverlay;
 @end
 
+@interface MapViewController (MWPhotoBrowserDelegate) <MWPhotoBrowserDelegate>
+
+@end
+
 @implementation MapViewController
 
 @synthesize mapView = __mapView;
 @synthesize track = __track;
+
 
 #define STREETS_MAP_ID @"examples.map-vyofok3q"
 
@@ -94,6 +100,25 @@
 
     // set new location as center
     [self.mapView setCenterCoordinate:coordinate animated:YES];
+}
+
+- (void)tapOnCalloutAccessoryControl:(UIControl *)control forAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map
+{
+    if (![annotation isKindOfClass:[RMPointAnnotation class]]) {
+        return;
+    }
+    RMMarker *marker = (RMMarker *)annotation.layer;
+    
+    UIImageView *imageView = (UIImageView *)marker.leftCalloutAccessoryView;
+    
+    MWPhoto *photo = [MWPhoto photoWithImage:imageView.image];
+    photo.caption = annotation.title;
+    
+    PhotoViewController *photoViewController = [[PhotoViewController alloc] init];
+    
+    photoViewController.photo = photo;
+    
+    [self.navigationController pushViewController:photoViewController animated:YES];
 }
 
 #pragma mark - Private methods
@@ -182,11 +207,26 @@
         return;
     }
 
+    [self.mapView removeAllAnnotations];
+    
     NSMutableArray *locations = [[NSMutableArray alloc] init];
 
     for (TrackPoint *trackPoint in trackPoints) {
         CLLocation *location = [[CLLocation alloc] initWithLatitude:trackPoint.latitude.floatValue longitude:trackPoint.longitude.floatValue];
         [locations addObject:location];
+        
+        if (trackPoint.name != nil) {
+            RMPointAnnotation * annotation = [[RMPointAnnotation alloc] initWithMapView:self.mapView coordinate:trackPoint.coordinate andTitle:trackPoint.name];
+            RMMarker *marker = (RMMarker *)annotation.layer;
+            if (trackPoint.image != nil) {
+                UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+                imageView.image = [UIImage imageWithData:trackPoint.image];
+                marker.leftCalloutAccessoryView = imageView;
+                
+                marker.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+            }
+            [self.mapView addAnnotation:annotation];
+        }
     }
     
     RMPolylineAnnotation *annotation = [[RMPolylineAnnotation alloc] initWithMapView:self.mapView points:locations];
@@ -198,10 +238,11 @@
     shape.lineCap = @"round";
     shape.lineJoin = @"round";
     
-    [self.mapView removeAllAnnotations];
+    
     [self.mapView addAnnotation:annotation];
 }
 
 @end
+
 
 

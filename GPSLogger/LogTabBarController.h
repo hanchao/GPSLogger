@@ -22,6 +22,6 @@
 @property (nonatomic,strong)MBProgressHUD * HUD;
 
 - (IBAction)close:(id)sender;
-- (IBAction)action:(id)sender;
+- (IBAction)share:(id)sender;
 
 @end

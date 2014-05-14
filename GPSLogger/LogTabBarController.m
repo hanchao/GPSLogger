@@ -21,12 +21,23 @@
 #import "GTMOAuthViewControllerTouch.h"
 
 @interface LogTabBarController ()
+{
+    UIActionSheet *_shareActionSheet;
+    UIActionSheet *_addTrackPointActionSheet;
+    UIImagePickerController * _imagePickerController;
+    TrackPoint * _trackPoint;
+}
 @property (strong, nonatomic) UIDocumentInteractionController *interactionController;
 @property (strong, nonatomic) CLLocationManager *locationManager;
+
 - (void)startLogging;
+- (void)update;
 @end
 
 @interface LogTabBarController (CLLocationManagerDelegate) <CLLocationManagerDelegate>
+@end
+
+@interface LogTabBarController (UIImagePickerControllerDelegate) <UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 @end
 
 @interface LogTabBarController (UIActionSheetDelegate) <UIActionSheetDelegate>
@@ -123,23 +134,56 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (IBAction)action:(id)sender
+- (IBAction)share:(id)sender
 {
-    UIActionSheet *actionSheet = [UIActionSheet new];
-    actionSheet.delegate = self;
+    _shareActionSheet = [UIActionSheet new];
+    _shareActionSheet.delegate = self;
     
     // setup actions
-    [actionSheet addButtonWithTitle:NSLocalizedString(@"Open In ...", nil)];
+    [_shareActionSheet addButtonWithTitle:NSLocalizedString(@"Open In ...", nil)];
     if ([MFMailComposeViewController canSendMail]) {
-        [actionSheet addButtonWithTitle:NSLocalizedString(@"Mail this Log", nil)];
+        [_shareActionSheet addButtonWithTitle:NSLocalizedString(@"Mail this Log", nil)];
     }
-    [actionSheet addButtonWithTitle:NSLocalizedString(@"Upload to OSM", nil)];
-    [actionSheet addButtonWithTitle:NSLocalizedString(@"Cancel", nil)];
+    [_shareActionSheet addButtonWithTitle:NSLocalizedString(@"Upload to OSM", nil)];
+    [_shareActionSheet addButtonWithTitle:NSLocalizedString(@"Cancel", nil)];
     
     // set cancel action position
-    actionSheet.cancelButtonIndex = actionSheet.numberOfButtons -1;
+    _shareActionSheet.cancelButtonIndex = _shareActionSheet.numberOfButtons -1;
     
-    [actionSheet showInView:self.view];
+    [_shareActionSheet showInView:self.view];
+}
+
+- (IBAction)addTrackPoint:(id)sender
+{
+    _addTrackPointActionSheet = [UIActionSheet new];
+    _addTrackPointActionSheet.delegate = self;
+    
+    // setup actions
+    [_addTrackPointActionSheet addButtonWithTitle:NSLocalizedString(@"Add Point", nil)];
+    [_addTrackPointActionSheet addButtonWithTitle:NSLocalizedString(@"Add Note", nil)];
+    [_addTrackPointActionSheet addButtonWithTitle:NSLocalizedString(@"Add Photo", nil)];
+    [_addTrackPointActionSheet addButtonWithTitle:NSLocalizedString(@"Cancel", nil)];
+    
+    // set cancel action position
+    _addTrackPointActionSheet.cancelButtonIndex = _addTrackPointActionSheet.numberOfButtons -1;
+    
+    [_addTrackPointActionSheet showInView:self.view];
+}
+
+- (void)camera {
+    
+    UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
+    //判断是否有摄像头
+    if(![UIImagePickerController isSourceTypeAvailable:sourceType])
+    {
+        return;
+    }
+    
+    _imagePickerController = [[UIImagePickerController alloc] init];
+    _imagePickerController.delegate = self;   // 设置委托
+    _imagePickerController.sourceType = sourceType;
+    _imagePickerController.allowsEditing = YES;
+    [self presentViewController:_imagePickerController animated:YES completion:nil];  //需要以模态的形式展示
 }
 
 #pragma mark - Private methods
@@ -160,6 +204,10 @@
     } else {
         self.navigationItem.leftBarButtonItem.title = NSLocalizedString(@"Stop Logging", nil);
         
+        UIBarButtonItem *buttonAddTrackPoint = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTrackPoint:)];
+        
+        self.navigationItem.rightBarButtonItem = buttonAddTrackPoint;
+         
         self.locationManager = [CLLocationManager new];
         self.locationManager.delegate = self;
 
@@ -176,6 +224,19 @@
         self.track.name = [formatter stringFromDate:self.track.created];
         
         [[IBCoreDataStore mainStore] save];
+    }
+}
+
+- (void)update
+{
+    if([self.selectedViewController isKindOfClass:[MapViewController class]]){
+        MapViewController *mapViewController = (MapViewController *)self.selectedViewController;
+        [mapViewController update];
+    }
+    
+    if([self.selectedViewController isKindOfClass:[DetailViewController class]]){
+        DetailViewController *detailViewController = (DetailViewController *)self.selectedViewController;
+        [detailViewController update];
     }
 }
 
@@ -208,6 +269,47 @@
         
         [[IBCoreDataStore mainStore] save];
         
+        [self update];
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    NSLog(@"error, %@", error);
+}
+
+@end
+
+#pragma mark -
+@implementation LogTabBarController (UIImagePickerControllerDelegate)
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
+    if (image == nil)
+        image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    _trackPoint.image = UIImageJPEGRepresentation(image,80);
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Input Name", nil) message:@"" delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil)  otherButtonTitles:NSLocalizedString(@"OK", nil) ,nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alert show];
+}
+
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
+{
+    if(buttonIndex == 1)
+    {
+        UITextField *tfName=[alertView textFieldAtIndex:0];
+        _trackPoint.name = tfName.text;
+        [self.track addTrackpointsObject:_trackPoint];
+        [[IBCoreDataStore mainStore] save];
+        
         if([self.selectedViewController isKindOfClass:[MapViewController class]]){
             MapViewController *mapViewController = (MapViewController *)self.selectedViewController;
             [mapViewController update];
@@ -217,12 +319,11 @@
             DetailViewController *detailViewController = (DetailViewController *)self.selectedViewController;
             [detailViewController update];
         }
+        
+        if (_imagePickerController != nil) {
+            [_imagePickerController dismissViewControllerAnimated:YES completion:nil];
+        }
     }
-}
-
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-{
-    NSLog(@"error, %@", error);
 }
 
 @end
@@ -241,6 +342,8 @@
 {
     // gpx
     GPXRoot *gpx = [GPXRoot rootWithCreator:@"GPSLogger"];
+    gpx.metadata.name = self.track.name;
+    gpx.metadata.time = self.track.created;
     
     // gpx > trk
     GPXTrack *gpxTrack = [gpx newTrack];
@@ -249,6 +352,7 @@
     // gpx > trk > trkseg > trkpt
     for (TrackPoint *trackPoint in self.track.sotredTrackPoints) {
         GPXTrackPoint *gpxTrackPoint = [gpxTrack newTrackpointWithLatitude:trackPoint.latitude.floatValue longitude:trackPoint.longitude.floatValue];
+        gpxTrackPoint.name = trackPoint.name;
         gpxTrackPoint.elevation = trackPoint.altitude.floatValue;
         gpxTrackPoint.speed = trackPoint.speed.floatValue;
         gpxTrackPoint.time = trackPoint.created;
@@ -298,11 +402,36 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex != actionSheet.cancelButtonIndex) {
-        
-        if (buttonIndex == 2) {
-            GTMOAuthAuthentication * auth = [self osmAuth];
-            if([auth canAuthorize])
+    if (_shareActionSheet == actionSheet) {
+        if (buttonIndex != actionSheet.cancelButtonIndex) {
+            
+            if (buttonIndex == 2) {
+                GTMOAuthAuthentication * auth = [self osmAuth];
+                if([auth canAuthorize])
+                {
+                    [self.view addSubview:self.HUD];
+                    self.HUD.mode = MBProgressHUDModeIndeterminate;
+                    self.HUD.labelText = NSLocalizedString(@"Saving", nil);
+                    [self.HUD show:YES];
+                    
+                    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+                        
+                        NSString *filePath = [self createGPX];
+                        
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            //[self.HUD hide:YES];
+                            if (filePath) {
+                                [self uploadGpx:filePath];
+                            }
+                        });
+                    });
+                }
+                else
+                {
+                    [self signIntoOSM:auth];
+                }
+            }
+            else
             {
                 [self.view addSubview:self.HUD];
                 self.HUD.mode = MBProgressHUDModeIndeterminate;
@@ -314,45 +443,60 @@
                     NSString *filePath = [self createGPX];
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        //[self.HUD hide:YES];
+                        [self.HUD hide:YES];
                         if (filePath) {
-                            [self uploadGpx:filePath];
+                            if (buttonIndex == 0) {
+                                [self openFile:filePath];
+                            }
+                            else if (buttonIndex == 1) {
+                                [self mailFile:filePath];
+                            }
                         }
                     });
                 });
             }
-            else
-            {
-                [self signIntoOSM:auth];
-            }
-        }
-        else
-        {
-            [self.view addSubview:self.HUD];
-            self.HUD.mode = MBProgressHUDModeIndeterminate;
-            self.HUD.labelText = NSLocalizedString(@"Saving", nil);
-            [self.HUD show:YES];
-            
-            dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-                
-                NSString *filePath = [self createGPX];
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.HUD hide:YES];
-                    if (filePath) {
-                        if (buttonIndex == 0) {
-                            [self openFile:filePath];
-                        }
-                        else if (buttonIndex == 1) {
-                            [self mailFile:filePath];
-                        }
-                    }
-                });
-            });
         }
     }
-    
-    
+    else if(_addTrackPointActionSheet == actionSheet)
+    {
+        if (buttonIndex != actionSheet.cancelButtonIndex) {
+            
+            CLLocation *location = self.locationManager.location;
+            
+            if (location == nil)
+            {
+                self.HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"x.png"]];
+                self.HUD.mode = MBProgressHUDModeCustomView;
+                self.HUD.labelText = NSLocalizedString(@"Unable to locate", nil);
+                [self.HUD hide:YES afterDelay:2.0];
+                
+                return;
+            }
+            _trackPoint = [TrackPoint create];
+            _trackPoint.latitude = [NSNumber numberWithFloat:location.coordinate.latitude];
+            _trackPoint.longitude = [NSNumber numberWithFloat:location.coordinate.longitude];
+            _trackPoint.altitude = [NSNumber numberWithFloat:location.altitude];
+            _trackPoint.speed = [NSNumber numberWithFloat:location.speed];
+            _trackPoint.created = location.timestamp;
+            
+            if (buttonIndex == 0)
+            {
+                [self.track addTrackpointsObject:_trackPoint];
+                [[IBCoreDataStore mainStore] save];
+                [self update];
+            }
+            else if (buttonIndex == 1)
+            {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Input Name", nil) message:@"" delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil)  otherButtonTitles:NSLocalizedString(@"OK", nil) ,nil];
+                alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+                [alert show];
+            }
+            else if (buttonIndex == 2)
+            {
+                [self camera];
+            }
+        }
+    }
     
 }
 

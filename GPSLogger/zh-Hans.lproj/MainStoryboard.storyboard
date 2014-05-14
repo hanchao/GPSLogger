@@ -154,7 +154,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="action" id="ukZ-AT-J5u">
                             <connections>
-                                <action selector="action:" destination="x4o-xQ-82v" id="J3u-lF-MsO"/>
+                                <action selector="share:" destination="x4o-xQ-82v" id="PWi-8c-foM"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

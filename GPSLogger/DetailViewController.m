@@ -77,6 +77,8 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
+    cell.accessoryType = UITableViewCellAccessoryNone;
+    
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             cell.textLabel.text = NSLocalizedString(@"Name", nil);
