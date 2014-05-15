@@ -318,10 +318,9 @@
             DetailViewController *detailViewController = (DetailViewController *)self.selectedViewController;
             [detailViewController update];
         }
-        
-        if (_imagePickerController != nil) {
-            [_imagePickerController dismissViewControllerAnimated:YES completion:nil];
-        }
+    }
+    if (_imagePickerController != nil) {
+        [_imagePickerController dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
