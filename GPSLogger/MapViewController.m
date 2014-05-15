@@ -47,7 +47,7 @@
 
 #define STREETS_MAP_ID @"examples.map-vyofok3q"
 
-#define TERRAIN_MAP_ID @"examples.map-9ijuk24y"
+#define TERRAIN_MAP_ID @"hanchao.i8ao15fd"
 
 #define SATELLITE_MAP_ID @"examples.map-qfyrx5r8"
 
@@ -83,6 +83,20 @@
     [super viewWillAppear:animated];
     
     [self updateOverlay];
+    
+    RMUserTrackingBarButtonItem *userTrackingBarButtonItem = [[RMUserTrackingBarButtonItem alloc] initWithMapView:self.mapView];
+    
+    UIBarButtonItem *rightBarButtonItem = self.tabBarController.navigationItem.rightBarButtonItem;
+    self.tabBarController.navigationItem.rightBarButtonItems = @[rightBarButtonItem,userTrackingBarButtonItem];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    UIBarButtonItem *rightBarButtonItem = self.tabBarController.navigationItem.rightBarButtonItem;
+    
+    self.tabBarController.navigationItem.rightBarButtonItems = @[rightBarButtonItem];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -93,21 +107,6 @@
 - (void)update
 {
     [self updateOverlay];
-    
-    NSArray *trackPoints = self.track.sotredTrackPoints;
-    
-    if (trackPoints.count == 0) {
-        return;
-    }
-    
-    TrackPoint *trackPoint = (TrackPoint *)[trackPoints lastObject];
-    
-    CLLocationCoordinate2D coordinate;
-    coordinate.latitude = trackPoint.latitude.floatValue;
-    coordinate.longitude = trackPoint.longitude.floatValue;
-
-    // set new location as center
-    [self.mapView setCenterCoordinate:coordinate animated:YES];
 }
 
 - (void)tapOnCalloutAccessoryControl:(UIControl *)control forAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map
@@ -135,7 +134,7 @@
     RMMapboxSource *tileSource;
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *tileJSON = [defaults stringForKey:@"tileJSON"];
+    NSString *tileJSON = [defaults stringForKey:TERRAIN_MAP_ID];
     if (tileJSON)
     {
         tileSource = [[RMMapboxSource alloc] initWithTileJSON:tileJSON];
@@ -145,7 +144,7 @@
         tileSource = [[RMMapboxSource alloc] initWithMapID:TERRAIN_MAP_ID];
         if (tileSource)
         {
-            [defaults setObject:tileSource.tileJSON forKey:@"tileJSON"];
+            [defaults setObject:tileSource.tileJSON forKey:TERRAIN_MAP_ID];
             [defaults synchronize];
         }
     }
@@ -161,6 +160,9 @@
         CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(39.907333, 116.391083);
         
         [self.mapView setZoom:12 atCoordinate:coordinate animated:NO];
+        
+        self.mapView.userTrackingMode = RMUserTrackingModeFollow;
+
         return;
     }
     
