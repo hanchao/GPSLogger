@@ -31,6 +31,14 @@
 
 @end
 
+@interface TrackPointAnnotation : RMPointAnnotation
+@property (nonatomic,strong) UIImage * trackImage;
+@end
+
+@interface TrackLineAnnotation : RMPolylineAnnotation
+
+@end
+
 @implementation MapViewController
 
 @synthesize mapView = __mapView;
@@ -104,15 +112,14 @@
 
 - (void)tapOnCalloutAccessoryControl:(UIControl *)control forAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map
 {
-    if (![annotation isKindOfClass:[RMPointAnnotation class]]) {
+    if (![annotation isKindOfClass:[TrackPointAnnotation class]]) {
         return;
     }
-    RMMarker *marker = (RMMarker *)annotation.layer;
     
-    UIImageView *imageView = (UIImageView *)marker.leftCalloutAccessoryView;
-    
-    MWPhoto *photo = [MWPhoto photoWithImage:imageView.image];
-    photo.caption = annotation.title;
+    TrackPointAnnotation *trackPointAnnotation = (TrackPointAnnotation *)annotation;
+
+    MWPhoto *photo = [MWPhoto photoWithImage:trackPointAnnotation.trackImage];
+    photo.caption = trackPointAnnotation.title;
     
     PhotoViewController *photoViewController = [[PhotoViewController alloc] init];
     
@@ -216,32 +223,56 @@
         [locations addObject:location];
         
         if (trackPoint.name != nil) {
-            RMPointAnnotation * annotation = [[RMPointAnnotation alloc] initWithMapView:self.mapView coordinate:trackPoint.coordinate andTitle:trackPoint.name];
-            RMMarker *marker = (RMMarker *)annotation.layer;
+            TrackPointAnnotation * annotation = [[TrackPointAnnotation alloc] initWithMapView:self.mapView coordinate:trackPoint.coordinate andTitle:trackPoint.name];
             if (trackPoint.image != nil) {
-                UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-                imageView.image = [UIImage imageWithData:trackPoint.image];
-                marker.leftCalloutAccessoryView = imageView;
-                
-                marker.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+                annotation.trackImage = [UIImage imageWithData:trackPoint.image];
             }
             [self.mapView addAnnotation:annotation];
         }
     }
     
-    RMPolylineAnnotation *annotation = [[RMPolylineAnnotation alloc] initWithMapView:self.mapView points:locations];
+    TrackLineAnnotation *annotation = [[TrackLineAnnotation alloc] initWithMapView:self.mapView points:locations];
        
     annotation.lineColor = [[UIColor blueColor] colorWithAlphaComponent:0.5];
     annotation.lineWidth = 5.0;
-    
-    RMShape* shape = (RMShape*)annotation.layer;
-    shape.lineCap = @"round";
-    shape.lineJoin = @"round";
     
     
     [self.mapView addAnnotation:annotation];
 }
 
+@end
+
+@implementation TrackPointAnnotation
+- (RMMapLayer *)layer
+{
+    RMMarker *marker = (RMMarker*)[super layer];
+    
+    if (self.trackImage != nil) {
+        if (marker.leftCalloutAccessoryView == nil) {
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+            imageView.image = self.trackImage;
+            marker.leftCalloutAccessoryView = imageView;
+        }
+
+        if (marker.rightCalloutAccessoryView == nil) {
+            marker.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        }
+    }
+    
+    return marker;
+}
+@end
+
+@implementation TrackLineAnnotation
+- (RMMapLayer *)layer
+{
+    RMShape *shape = (RMShape*)[super layer];
+
+    shape.lineCap = @"round";
+    shape.lineJoin = @"round";
+    
+    return shape;
+}
 @end
 
 
