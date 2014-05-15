@@ -159,7 +159,6 @@
     _addTrackPointActionSheet.delegate = self;
     
     // setup actions
-    [_addTrackPointActionSheet addButtonWithTitle:NSLocalizedString(@"Add Point", nil)];
     [_addTrackPointActionSheet addButtonWithTitle:NSLocalizedString(@"Add Note", nil)];
     [_addTrackPointActionSheet addButtonWithTitle:NSLocalizedString(@"Add Photo", nil)];
     [_addTrackPointActionSheet addButtonWithTitle:NSLocalizedString(@"Cancel", nil)];
@@ -483,17 +482,11 @@
             
             if (buttonIndex == 0)
             {
-                [self.track addTrackpointsObject:_trackPoint];
-                [[IBCoreDataStore mainStore] save];
-                [self update];
-            }
-            else if (buttonIndex == 1)
-            {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Input Name", nil) message:@"" delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil)  otherButtonTitles:NSLocalizedString(@"OK", nil) ,nil];
                 alert.alertViewStyle = UIAlertViewStylePlainTextInput;
                 [alert show];
             }
-            else if (buttonIndex == 2)
+            else if (buttonIndex == 1)
             {
                 [self camera];
             }
