@@ -269,9 +269,9 @@
 - (RMMapLayer *)layer
 {
     RMShape *shape = (RMShape*)[super layer];
-
-    shape.lineCap = @"round";
-    shape.lineJoin = @"round";
+    
+    shape.lineCap = kCALineCapRound;
+    shape.lineJoin = kCALineJoinRound;
     
     return shape;
 }
