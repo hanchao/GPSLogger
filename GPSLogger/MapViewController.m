@@ -234,10 +234,6 @@
     }
     
     TrackLineAnnotation *annotation = [[TrackLineAnnotation alloc] initWithMapView:self.mapView points:locations];
-       
-    annotation.lineColor = [[UIColor blueColor] colorWithAlphaComponent:0.5];
-    annotation.lineWidth = 5.0;
-    
     
     [self.mapView addAnnotation:annotation];
 }
@@ -247,33 +243,50 @@
 @implementation TrackPointAnnotation
 - (RMMapLayer *)layer
 {
-    RMMarker *marker = (RMMarker*)[super layer];
+    if(layer == nil)
+    {
+        RMMarker *marker = (RMMarker*)[super layer];
     
-    if (self.trackImage != nil) {
-        if (marker.leftCalloutAccessoryView == nil) {
-            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-            imageView.image = self.trackImage;
-            marker.leftCalloutAccessoryView = imageView;
-        }
+        if (self.trackImage != nil) {
+            if (marker.leftCalloutAccessoryView == nil) {
+                UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+                imageView.image = self.trackImage;
+                marker.leftCalloutAccessoryView = imageView;
+            }
 
         if (marker.rightCalloutAccessoryView == nil) {
             marker.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         }
     }
     
-    return marker;
+        return marker;
+    }
+    else
+    {
+        return [super layer];
+    }
 }
 @end
 
 @implementation TrackLineAnnotation
 - (RMMapLayer *)layer
 {
-    RMShape *shape = (RMShape*)[super layer];
+    if(layer == nil)
+    {
+        RMShape *shape = (RMShape*)[super layer];
     
-    shape.lineCap = kCALineCapRound;
-    shape.lineJoin = kCALineJoinRound;
+        shape.lineColor = [[UIColor blueColor] colorWithAlphaComponent:0.5];
+        shape.lineWidth = 5.0;
+        
+        shape.lineCap = kCALineCapRound;
+        shape.lineJoin = kCALineJoinRound;
+        return shape;
+    }
+    else
+    {
+        return [super layer];
+    }
     
-    return shape;
 }
 @end
 
