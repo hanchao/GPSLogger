@@ -47,7 +47,7 @@
 
 #define STREETS_MAP_ID @"examples.map-vyofok3q"
 
-#define TERRAIN_MAP_ID @"hanchao.i8ao15fd"
+#define TERRAIN_MAP_ID @"examples.map-i875mjb7"
 
 #define SATELLITE_MAP_ID @"examples.map-qfyrx5r8"
 
