@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="duI-hA-LYb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="duI-hA-LYb">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -60,7 +60,7 @@
             </objects>
             <point key="canvasLocation" x="598" y="67"/>
         </scene>
-        <!--Map View Controller - Map-->
+        <!--Map View Controller - Hartă-->
         <scene sceneID="703-Az-xUB">
             <objects>
                 <viewController id="NNT-Nd-TQh" customClass="MapViewController" sceneMemberID="viewController">
@@ -69,13 +69,13 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Map" image="map.png" id="biD-jG-v3X"/>
+                    <tabBarItem key="tabBarItem" title="Hartă" image="map.png" id="biD-jG-v3X"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OP6-0F-kla" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1642" y="-118"/>
         </scene>
-        <!--Detail View Controller - Detail-->
+        <!--Detail View Controller - Detalii-->
         <scene sceneID="aiw-2E-IXj">
             <objects>
                 <tableViewController id="bD9-tk-RCJ" customClass="DetailViewController" sceneMemberID="viewController">
@@ -115,7 +115,7 @@
                             <outlet property="delegate" destination="bD9-tk-RCJ" id="Kga-uQ-tBa"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Detail" image="detail.png" id="Qzu-fX-CcL"/>
+                    <tabBarItem key="tabBarItem" title="Detalii" image="detail.png" id="Qzu-fX-CcL"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9VP-9a-7Yu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -147,7 +147,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="x4o-xQ-82v" customClass="LogTabBarController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="WZg-RZ-ahm">
-                        <barButtonItem key="leftBarButtonItem" title="Close" id="WIi-r0-e1c">
+                        <barButtonItem key="leftBarButtonItem" title="Închidere" id="WIi-r0-e1c">
                             <connections>
                                 <action selector="close:" destination="x4o-xQ-82v" id="JbQ-2w-RcI"/>
                             </connections>
