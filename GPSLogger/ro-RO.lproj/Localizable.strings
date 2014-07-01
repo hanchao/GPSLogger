@@ -1,0 +1,83 @@
+/* 
+  Localization.strings
+  Localizable
+  GPSLogger
+
+  Created by chao han on 14-3-26.
+
+*/
+
+"Open In ..." = "Open In ...";
+
+"Mail this Log" = "Mail this Log";
+
+"Upload to OSM" = "Upload to OSM";
+
+"Cancel" = "Cancel";
+
+"Error" = "Error";
+
+"Location Service not enabeld." = "Location Service not enabeld.";
+
+"OK" = "OK";
+
+"Stop Logging" = "Stop Logging";
+
+"No application can be found to open the file." = "No application can be found to open the file.";
+
+"Saving" = "Saving";
+
+"Uploading" = "Uploading";
+
+"Completed" = "Completed";
+
+"Failed" = "Failed";
+
+"m" = "m";
+
+"km" = "km";
+
+"m/s" = "m/s";
+
+"Distance" = "Distance";
+
+"Used time" = "Used time";
+
+"Name" = "Name";
+
+"Number of Track Points" = "Number of Track Points";
+
+"Track Information" = "Track Information";
+
+"Track Points" = "Track Points";
+
+"Altitude" = "Altitude";
+
+"Speed" = "Speed";
+
+"Close" = "Close";
+
+"Map" = "Map";
+
+"Detail" = "Detail";
+
+"Input Name" = "Input Name";
+
+"Max Speed" = "Max Speed";
+
+"Min Speed" = "Min Speed";
+
+"Average Speed" = "Average Speed";
+
+"Max Altitude" = "Max Altitude";
+
+"Min Altitude" = "Min Altitude";
+
+"Average Altitude" = "Average Altitude";
+
+"Add Note" = "Add Note";
+
+"Add Photo" = "Add Photo";
+
+"Unable to locate" = "Unable to locate";
+
