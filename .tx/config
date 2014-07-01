@@ -1,0 +1,8 @@
+[main]
+host = https://www.transifex.com
+lang_map = zh_CN:zh-Hans,ro_RO:ro-RO
+
+[gpslogger.localizablestrings]
+source_lang = en
+source_file = GPSLogger/en.lproj/Localizable.strings
+file_filter = GPSLogger/<lang>.lproj/Localizable.strings
