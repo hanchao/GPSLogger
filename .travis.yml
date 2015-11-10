@@ -3,6 +3,3 @@ xcode_workspace: GPSLogger.xcworkspace
 xcode_scheme: GPSLogger
 xcode_sdk: iphonesimulator
 
-before_install:
-  - sudo gem update --system
-  - sudo gem install cocoapods
