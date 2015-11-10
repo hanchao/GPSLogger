@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <MapBox/MapBox.h>
+#import "Mapbox.h"
 #import "Track.h"
 
 @interface MapViewController : UIViewController
 
-@property (strong, nonatomic) RMMapView *mapView;
+@property (strong, nonatomic) MGLMapView *mapView;
 @property (strong, nonatomic) Track *track;
 
 - (void)update;
